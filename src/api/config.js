@@ -1,5 +1,4 @@
-
-import Taro from '@tarojs/taro';
+import Taro from "@tarojs/taro";
 
 function request(url, data = {}, method = "GET") {
   return new Promise(function(resolve, reject) {
@@ -12,7 +11,6 @@ function request(url, data = {}, method = "GET") {
         "X-Litemall-Token": Taro.getStorageSync("token")
       },
       success: function(res) {
-        console.log('res: ', res);
         if (res.statusCode == 200) {
           resolve(res.data);
         } else {

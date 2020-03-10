@@ -4,8 +4,7 @@ import { Provider } from "@tarojs/redux";
 import dva from "./utils/dva";
 import models from "./models";
 import Index from "./pages/index/index";
-
-// import configStore from './store'
+import "./app.less";
 
 const dvaApp = dva.createApp({
   initialState: {},
@@ -13,8 +12,6 @@ const dvaApp = dva.createApp({
 });
 
 const store = dvaApp.getStore();
-
-import "./app.less";
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -26,11 +23,11 @@ import "./app.less";
 
 class App extends Component {
   config = {
-    pages: ["pages/index/index"],
+    pages: ["pages/start/Index", "pages/index/index"],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
-      navigationBarTitleText: "WeChat",
+      navigationBarTitleText: "taro",
       navigationBarTextStyle: "black"
     }
   };
