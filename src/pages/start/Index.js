@@ -21,7 +21,7 @@ export default class Index extends Component {
           </div>
         </div>
         <Button class="btn btn-gradient" onClick={()=>{
-          Taro.navigateTo({url:'/pages/index/index'})
+          Taro.switchTab({url:'/pages/index/index'})
         }}>进入Taro小程序</Button>
       </View>
     );

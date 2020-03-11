@@ -1,9 +1,10 @@
 import "@tarojs/async-await";
 import Taro, { Component } from "@tarojs/taro";
 import { Provider } from "@tarojs/redux";
+import 'taro-ui/dist/style/index.scss';
 import dva from "./utils/dva";
 import models from "./models";
-import Index from "./pages/index/index";
+import Index from "./pages/index/Index";
 import "./app.less";
 
 const dvaApp = dva.createApp({
@@ -23,12 +24,36 @@ const store = dvaApp.getStore();
 
 class App extends Component {
   config = {
-    pages: ["pages/start/Index", "pages/index/index"],
+    pages: ["pages/index/Index", "pages/singer/Index", "pages/rank/Index"],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
       navigationBarTitleText: "taro",
-      navigationBarTextStyle: "black"
+      navigationBarTextStyle: "black",
+      navigationStyle: "custom"
+    },
+    tabBar: {
+      // "selectedColor": "#d44439", //颜色
+      list: [
+        {
+          pagePath: "pages/index/Index",
+          text: "推荐",
+          iconPath: "./assets/images/tabbar/store.png",
+          selectedIconPath: "./assets/images/tabbar/store-active.png"
+        },
+        {
+          pagePath: "pages/singer/Index",
+          text: "歌手",
+          iconPath: "./assets/images/tabbar/user.png",
+          selectedIconPath: "./assets/images/tabbar/user-active.png"
+        },
+        {
+          pagePath: "pages/rank/Index",
+          text: "排行榜",
+          iconPath: "./assets/images/tabbar/cate.png",
+          selectedIconPath: "./assets/images/tabbar/cate-active.png"
+        }
+      ]
     }
   };
 

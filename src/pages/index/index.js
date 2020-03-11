@@ -1,54 +1,43 @@
-import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Text } from "@tarojs/components";
+import Taro, { useEffect } from "@tarojs/taro";
+import { View, Button, ScrollView, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
+import CustomNavigation from "../../components/customNavigation/Index";
+import Banner from "../../components/banner/Index";
+import { getWindowHeight } from "../../utils/util";
 
-import "./index.less";
+import "./Index.less";
 
-@connect(
-  ({ appGlobal }) => ({
-    arr: appGlobal.arr
-  }),
-  dispatch => ({
-    add() {
-      dispatch(add());
-    },
-    dec() {
-      dispatch(minus());
-    },
-    asyncAdd() {
-      dispatch(asyncAdd());
-    },
-    bannerList() {}
-  })
-)
-class Index extends Component {
-  config = {
-    navigationBarTitleText: "首页"
-  };
+function Index(props) {
+  const { bannerList, onGetBanner } = props;
+  useEffect(() => {
+    onGetBanner();
+  }, []);
 
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
-  }
-
-  componentWillUnmount() {}
-
-  componentDidShow() {
-    // this.props.dispatch({type:"appGlobal/fetchBannerList"})
-    this.props.dispatch({
-      type: "appGlobal/fetchBannerList"
-    });
-  }
-
-  componentDidHide() {}
-
-  render() {
-    console.log(this.props.arr, 6666666666);
-    return (
-      <View className="index">
+  const height = getWindowHeight(true);
+  console.log(bannerList, 44444444);
+  return (
+    <View className="recommendIndex">
+      <CustomNavigation background="#d44439" searchBar></CustomNavigation>
+      <ScrollView scrollY style={{ height }}>
+        <View className="bannerWrap">
+          <Banner bannerList={bannerList}></Banner>
+        </View>
         首页 <Text className="iconfont icon-shanchu"></Text>
-      </View>
-    );
-  }
+      </ScrollView>
+    </View>
+  );
 }
 
-export default Index;
+function mapStateToProps(state) {
+  const { bannerList } = state.recommendIndex;
+  return { bannerList };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    onGetBanner() {
+      dispatch({ type: "recommendIndex/fetchBannerList" });
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Index);

@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 
 import { getBannerList } from "../services/homeService";
 export default {
-  namespace: "appGlobal",
+  namespace: "taroGlobal",
   state: {
     bannerList: [],
     arr: []
