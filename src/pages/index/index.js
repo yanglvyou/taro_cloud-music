@@ -3,18 +3,20 @@ import { View, Button, ScrollView, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
 import Banner from "../../components/banner/Index";
+import RecommendList from "../../components/recommendList/Index";
 import { getWindowHeight } from "../../utils/util";
 
 import "./Index.less";
 
 function Index(props) {
-  const { bannerList, onGetBanner } = props;
+  const { bannerList, recommendList, onGetBanner, onGetRecommendList } = props;
   useEffect(() => {
     onGetBanner();
+    onGetRecommendList();
   }, []);
 
   const height = getWindowHeight(true);
-  console.log(bannerList, 44444444);
+  console.log(bannerList, recommendList, 44444444);
   return (
     <View className="recommendIndex">
       <CustomNavigation background="#d44439" searchBar></CustomNavigation>
@@ -22,20 +24,26 @@ function Index(props) {
         <View className="bannerWrap">
           <Banner bannerList={bannerList}></Banner>
         </View>
-        首页 <Text className="iconfont icon-shanchu"></Text>
+        <View className="recommendListWrap">
+          <RecommendList recommendList={recommendList}></RecommendList>
+        </View>
+        <Text className="txt">首页 鞍山市所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所</Text><Text className="iconfont icon-shanchu"></Text>
       </ScrollView>
     </View>
   );
 }
 
 function mapStateToProps(state) {
-  const { bannerList } = state.recommendIndex;
-  return { bannerList };
+  const { bannerList, recommendList } = state.recommendIndex;
+  return { bannerList, recommendList };
 }
 function mapDispatchToProps(dispatch) {
   return {
     onGetBanner() {
       dispatch({ type: "recommendIndex/fetchBannerList" });
+    },
+    onGetRecommendList() {
+      dispatch({ type: "recommendIndex/fetchRecommendList" });
     }
   };
 }

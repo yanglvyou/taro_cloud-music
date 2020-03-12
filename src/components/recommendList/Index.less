@@ -1,0 +1,41 @@
+.listWrap {
+  margin-top: 20px;
+  &__title {
+    font-size: 34px;
+    margin: 40px 0 20px 20px;
+  }
+  &__recommend {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  &__recommendList {
+    position: relative;
+  }
+  &__imgWrap {
+    width: 240px;
+    height: 240px;
+  }
+  &__img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  &__desc {
+    width: 240px;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  &__name {
+    /* autoprefixer: off */
+     /* autoprefixer: on */
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

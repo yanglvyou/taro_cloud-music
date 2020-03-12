@@ -2,8 +2,7 @@ import Taro, { useEffect } from "@tarojs/taro";
 import { View, Swiper, SwiperItem, Image } from "@tarojs/components";
 import "./Index.less";
 
-function Banner(props) {
-  const { bannerList } = props;
+const Banner = (props) => {
   return (
     <View className="banner">
       <Swiper
@@ -14,7 +13,7 @@ function Banner(props) {
         indicatorDots
         autoplay
       >
-        {bannerList.map(item => {
+        {props.bannerList.map(item => {
           return (
             <SwiperItem
               onClick={() => {
@@ -34,6 +33,8 @@ function Banner(props) {
       </Swiper>
     </View>
   );
-}
-
+};
+Banner.defaultProps = {
+  bannerList: []
+};
 export default Banner;
