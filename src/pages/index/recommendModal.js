@@ -5,7 +5,8 @@ export default {
   namespace: "recommendIndex",
   state: {
     bannerList: [],
-    recommendList: []
+    recommendList: [],
+    enterLoading: true
   },
   effects: {
     *fetchBannerList({ payload }, { call, put }) {
@@ -16,6 +17,9 @@ export default {
     *fetchRecommendList({ payload }, { call, put }) {
       const { result: recommendList } = yield call(getRecommendList);
       yield put({ type: "saveRecommendList", payload: { recommendList } });
+    },
+    *changeEnterLoading({ payload }, { call, put }) {
+      yield put({ type: "saveEnterLoading", payload: { enterLoading: false } });
     }
   },
   reducers: {
@@ -24,6 +28,9 @@ export default {
     },
     saveRecommendList(state, { payload: { recommendList } }) {
       return { ...state, recommendList };
+    },
+    saveEnterLoading(state, { payload: {enterLoading} }) {
+      return { ...state, enterLoading };
     }
   }
 };

@@ -1,12 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Text } from "@tarojs/components";
+import { View, ScrollView, Button, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
+import CustomNavigation from "../../components/customNavigation/Index";
+import HorizenItem from '../../components/horizen-item/Index';
+import {categoryTypes,alphaTypes} from '../../api/data';
 
 import "./index.less";
 
 @connect(
-  ({ appGlobal }) => ({
-  }),
+  ({ appGlobal }) => ({}),
   dispatch => ({
     add() {
       dispatch(add());
@@ -42,8 +44,12 @@ class Index extends Component {
 
   render() {
     return (
-      <View className="index">
-        首页 <Text className="iconfont icon-shanchu"></Text>
+      <View className="user">
+        <CustomNavigation background="#d44439" searchBar></CustomNavigation>
+        <ScrollView scrollY className="user__wrap">
+        <HorizenItem list={categoryTypes} title="分类(默认热门)" oldVal={alphaTypes}></HorizenItem>
+          首页 <Text className="iconfont icon-shanchu"></Text>
+        </ScrollView>
       </View>
     );
   }

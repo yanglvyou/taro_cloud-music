@@ -4,19 +4,27 @@ import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
 import Banner from "../../components/banner/Index";
 import RecommendList from "../../components/recommendList/Index";
+import Loading from "../../components/Loading/Index";
 import { getWindowHeight } from "../../utils/util";
 
 import "./Index.less";
 
 function Index(props) {
-  const { bannerList, recommendList, onGetBanner, onGetRecommendList } = props;
+  const {
+    bannerList,
+    recommendList,
+    enterLoading,
+    onGetBanner,
+    onGetRecommendList,
+    changeEnterLoading
+  } = props;
   useEffect(() => {
     onGetBanner();
     onGetRecommendList();
+    changeEnterLoading();
   }, []);
 
   const height = getWindowHeight(true);
-  console.log(bannerList, recommendList, 44444444);
   return (
     <View className="recommendIndex">
       <CustomNavigation background="#d44439" searchBar></CustomNavigation>
@@ -27,15 +35,20 @@ function Index(props) {
         <View className="recommendListWrap">
           <RecommendList recommendList={recommendList}></RecommendList>
         </View>
-        <Text className="txt">首页 鞍山市所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所</Text><Text className="iconfont icon-shanchu"></Text>
+        {enterLoading && <Loading></Loading>}
+        <Text className="txt">
+          首页
+          鞍山市所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所
+        </Text>
+        <Text className="iconfont icon-shanchu"></Text>
       </ScrollView>
     </View>
   );
 }
 
 function mapStateToProps(state) {
-  const { bannerList, recommendList } = state.recommendIndex;
-  return { bannerList, recommendList };
+  const { bannerList, recommendList, enterLoading } = state.recommendIndex;
+  return { bannerList, recommendList, enterLoading };
 }
 function mapDispatchToProps(dispatch) {
   return {
@@ -44,6 +57,9 @@ function mapDispatchToProps(dispatch) {
     },
     onGetRecommendList() {
       dispatch({ type: "recommendIndex/fetchRecommendList" });
+    },
+    changeEnterLoading() {
+      dispatch({ type: "recommendIndex/changeEnterLoading" });
     }
   };
 }

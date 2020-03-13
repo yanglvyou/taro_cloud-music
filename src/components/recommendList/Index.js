@@ -4,7 +4,6 @@ import "./Index.less";
 
 const RecommendList = props => {
   const { recommendList } = props;
-  console.log(222222222, recommendList);
   return (
     <View className="listWrap">
       <Text className="listWrap__title">推荐歌单</Text>

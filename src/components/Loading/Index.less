@@ -1,0 +1,28 @@
+.loading {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0.6;
+  margin: auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #d44439;
+  animation: Loading 1.4s infinite ease-in;
+}
+.debunce2 {
+  animation-delay: -0.7s;
+}
+
+@keyframes Loading {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
