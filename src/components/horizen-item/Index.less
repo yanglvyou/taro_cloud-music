@@ -1,7 +1,9 @@
 .horizen {
-  margin-top: 10px;
+  background-color: #ffffff;
+  // margin-top: 10px;
   font-size: 30px;
   &__horizenWrap {
+    box-sizing: border-box;
     // display: flex;
     // flex-direction: row;
     // align-items: center;
@@ -11,22 +13,28 @@
     width: 100%;
     padding: 10px;
     -webkit-overflow-scrolling: touch;
-    &::-webkit-scrollbar{
-      height:10px;
+    &::-webkit-scrollbar {
+      height: 10px;
     }
-    &::-webkit-scrollbar-track{
+    &::-webkit-scrollbar-track {
       background-color: #f0f0f0;
     }
-    &::-webkit-scrollbar-thumb{
+    &::-webkit-scrollbar-thumb {
       border-radius: 5px;
       background-color: #999;
     }
   }
-  &__title{
-    color:#666;
+  &__title {
+    color: #666;
+    margin-right: 5px;
   }
   &__item {
-
-    padding:5px;
+    display: inline-flex;
+    box-sizing: border-box;
+    padding: 5px 20px;
+    border-radius: 2px;
+    &-selected {
+      color: #d44439;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import Taro, { useEffect } from "@tarojs/taro";
-import { View, Button, ScrollView, Text } from "@tarojs/components";
+import { View, ScrollView, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
 import Banner from "../../components/banner/Index";

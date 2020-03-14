@@ -216,7 +216,6 @@ class CustomNavigation extends Component {
       iconTheme,
       extClass
     } = this.props;
-    console.log(background,1111111);
     let nav_bar__center = null;
     if (title) {
       nav_bar__center = <text>{title}</text>;

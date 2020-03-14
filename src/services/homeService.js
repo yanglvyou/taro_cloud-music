@@ -10,6 +10,4 @@ export async function getRecommendList() {
 }
 
 
-export async function getGoodsRelated(id) {
-  return request.get(Api.GoodsRelated, {id});
-}
+
