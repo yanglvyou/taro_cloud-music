@@ -5,4 +5,6 @@ export default {
   BannerUrl: baseUrl + "/banner", //首页Banner,
   RecommendListUrl: baseUrl + "/personalized", //推荐歌单,
   getHotSingerList:baseUrl+'/top/artists',//歌手列表
+  getArtistList:baseUrl + '/artist/list',
+  getRankList:baseUrl + '/toplist/detail',//排行榜数据
 };

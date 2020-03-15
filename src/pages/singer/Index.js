@@ -12,19 +12,35 @@ import "./Index.less";
 const Singers = props => {
   const height = getWindowHeight(true);
   const [count, setCount] = useState(0);
-  const { singersList, more, enterLoading, onGetHotSingersList } = props;
+  const {
+    singersList,
+    more,
+    enterLoading,
+    onGetHotSingersList,
+    onGetSingersList,
+    onClearSingerList
+  } = props;
   const [category, setCategory] = useState("");
   const [alpha, setAlpha] = useState("");
   const handleUpdateAlpha = val => {
+    onClearSingerList();
+    const alpha = val.toLowerCase();
+    onGetSingersList(category, alpha, 0);
+    setCount(0);
     setAlpha(val);
   };
   const handleUpdateCategory = val => {
-    console.log("val: ", val);
+    onClearSingerList();
+    onGetSingersList(val, alpha, 0);
+    setCount(0);
     setCategory(val);
   };
   const loadMoreSingers = () => {
-    if (more) {
+    if (more && alpha === "" && category === "") {
       onGetHotSingersList(count + 1);
+      setCount(count + 1);
+    } else if (more) {
+      onGetSingersList(category, alpha, count + 1);
       setCount(count + 1);
     }
   };
@@ -32,7 +48,6 @@ const Singers = props => {
   useEffect(() => {
     onGetHotSingersList(0);
   }, []);
-  console.log(singersList, 111133333);
   return (
     <View className="user">
       <CustomNavigation background="#d44439" searchBar></CustomNavigation>
@@ -84,6 +99,17 @@ function mapDispatchToProps(dispatch) {
   return {
     onGetHotSingersList(count) {
       dispatch({ type: "singerIndex/fetchHotSingersList", payload: count });
+    },
+    onGetSingersList(category, alpha, count) {
+      dispatch({
+        type: "singerIndex/fetchSingersList",
+        payload: category,
+        alpha,
+        count
+      });
+    },
+    onClearSingerList() {
+      dispatch({ type: "singerIndex/clearSingersList", payload: {} });
     }
   };
 }

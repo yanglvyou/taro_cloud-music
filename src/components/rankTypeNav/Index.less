@@ -1,0 +1,29 @@
+.rankType {
+  display: flex;
+  flex-direction: space-between;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1 1 50%;
+
+  height: 80px;
+  border-bottom: 1px solid #ccc;
+  &__item {
+    font-size: 30px;
+    &-active {
+      color:#d44439;
+      position: relative;
+      &:after {
+        content: "";
+        position: absolute;
+        height: 8px;
+        width: 100%;
+        background: #d44439;
+        bottom: -8px;
+        left: 0;
+        // margin-left: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+}

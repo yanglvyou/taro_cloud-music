@@ -1,7 +1,7 @@
-import Taro from '@tarojs/taro'
+import Taro from "@tarojs/taro";
 
-const NAVIGATOR_HEIGHT = 44
-const TAB_BAR_HEIGHT = 50
+const NAVIGATOR_HEIGHT = 44;
+const TAB_BAR_HEIGHT = 50;
 
 /**
  * 返回屏幕可用高度
@@ -9,22 +9,33 @@ const TAB_BAR_HEIGHT = 50
  * @param {*} showTabBar
  */
 export function getWindowHeight(showTabBar = true) {
-  const info = Taro.getSystemInfoSync()
-  const { windowHeight, statusBarHeight, titleBarHeight } = info
-  const tabBarHeight = showTabBar ? TAB_BAR_HEIGHT : 0
+  const info = Taro.getSystemInfoSync();
+  const { windowHeight, statusBarHeight, titleBarHeight } = info;
+  const tabBarHeight = showTabBar ? TAB_BAR_HEIGHT : 0;
 
-  if (process.env.TARO_ENV === 'rn') {
-    return windowHeight - statusBarHeight - NAVIGATOR_HEIGHT - tabBarHeight
+  if (process.env.TARO_ENV === "rn") {
+    return windowHeight - statusBarHeight - NAVIGATOR_HEIGHT - tabBarHeight;
   }
 
-  if (process.env.TARO_ENV === 'h5') {
-    return `${windowHeight - tabBarHeight}px`
+  if (process.env.TARO_ENV === "h5") {
+    return `${windowHeight - tabBarHeight}px`;
   }
 
-  if (process.env.TARO_ENV === 'alipay') {
+  if (process.env.TARO_ENV === "alipay") {
     // NOTE 支付宝比较迷，windowHeight 似乎是去掉了 tabBar 高度，但无 tab 页跟 tab 页返回高度是一样的
-    return `${windowHeight - statusBarHeight - titleBarHeight + (showTabBar ? 0 : TAB_BAR_HEIGHT)}px`
+    return `${windowHeight -
+      statusBarHeight -
+      titleBarHeight +
+      (showTabBar ? 0 : TAB_BAR_HEIGHT)}px`;
   }
 
-  return `${windowHeight}px`
+  return `${windowHeight}px`;
 }
+
+export const filterIndex = rankList => {
+  for (let i = 0; i < rankList.length - 1; i++) {
+    if (rankList[i].tracks.length && !rankList[i + 1].tracks.length) {
+      return i + 1;
+    }
+  }
+};
