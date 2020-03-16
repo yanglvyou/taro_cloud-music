@@ -36,11 +36,6 @@ function Index(props) {
           <RecommendList recommendList={recommendList}></RecommendList>
         </View>
         {enterLoading && <Loading></Loading>}
-        <Text className="txt">
-          首页
-          鞍山市所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所所
-        </Text>
-        <Text className="iconfont icon-shanchu"></Text>
       </ScrollView>
     </View>
   );
