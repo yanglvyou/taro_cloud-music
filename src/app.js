@@ -1,7 +1,7 @@
 import "@tarojs/async-await";
 import Taro, { Component } from "@tarojs/taro";
 import { Provider } from "@tarojs/redux";
-import 'taro-ui/dist/style/index.scss';
+import "taro-ui/dist/style/index.scss";
 import dva from "./utils/dva";
 import models from "./models";
 import Index from "./pages/index/Index";
@@ -24,7 +24,12 @@ const store = dvaApp.getStore();
 
 class App extends Component {
   config = {
-    pages: ["pages/index/Index", "pages/singer/Index", "pages/rank/Index"],
+    pages: [
+      "pages/index/Index",
+      "pages/singer/Index",
+      "pages/rank/Index",
+      "pages/detail/Index"
+    ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",

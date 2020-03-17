@@ -11,6 +11,7 @@ import CustomNavigation from "../../components/customNavigation/Index";
 import RankTypeNav from "../../components/rankTypeNav/Index";
 import { getWindowHeight } from "../../utils/util";
 import emitter from "../../utils/event";
+import { navigateTo } from "../../utils/navigate";
 
 import "./Index.less";
 @connect(
@@ -56,81 +57,92 @@ class Rank extends Component {
     }
   }
 
+  goToDetail(item) {
+    console.log("item: ", item);
+    navigateTo({ pathname: "/pages/detail/Index", search: { id: item.id } });
+  }
+
   render() {
     const height = getWindowHeight(true);
+    console.log("height: ", height);
     const globalList = this.props.globalList;
-    console.log("globalList: ", globalList);
     const officialList = this.props.officialList;
-    console.log("officialList: ", officialList);
     return (
       <View className="rank">
         <CustomNavigation background="#d44439" searchBar></CustomNavigation>
-        <ScrollView srcollY style={{ height }}>
+        <ScrollView scrollY style={{ height }}>
           <View className="rank__nav">
             <RankTypeNav
               currentType={this.state.currentType}
               typeItems={this.state.typeItems}
             />
           </View>
+
           <Swiper
             className="rank__wrap"
-            style={{ height }}
             onChange={this.handleChange}
             current={this.state.currentIndex}
+            style={{ height }}
           >
             {this.state.typeItems.map(item => {
               return (
                 <SwiperItem key={item.type}>
-                  {this.state.currentType === "official" && (
-                    <View>
-                      <View className="rank__title">官方榜</View>
-                      {this.props.officialList.map(offical => (
-                        <View
-                          key={offical.commentThreadId}
-                          className="rank__official"
-                        >
-                          <View className="rank__imgWrap">
-                            <Image
-                              className="rank__imgWrap-img"
-                              src={offical.coverImgUrl}
-                            ></Image>
-                            <View className="rank__imgWrap-txt">
-                              {offical.updateFrequency}
+                  <ScrollView scrollY style={{ height }}>
+                    {this.state.currentType === "official" && (
+                      <View>
+                        <View className="rank__title">官方榜</View>
+                        {officialList.map(offical => (
+                          <View
+                            key={offical.commentThreadId}
+                            className="rank__official"
+                            onClick={this.goToDetail.bind(this, offical)}
+                          >
+                            <View className="rank__imgWrap">
+                              <Image
+                                className="rank__imgWrap-img"
+                                src={offical.coverImgUrl}
+                              ></Image>
+                              <View className="rank__imgWrap-txt">
+                                {offical.updateFrequency}
+                              </View>
                             </View>
-                          </View>
-                          <View className="rank__info">
-                            {offical.tracks.map((item, index2) => {
-                              return (
-                                <View key={index2}>
-                                  {`${index2 + 1}. ${
-                                    offical.tracks[index2].first
-                                  } - ${offical.tracks[index2].second}`}
-                                </View>
-                              );
-                            })}
-                          </View>
-                        </View>
-                      ))}
-                    </View>
-                  )}
-                  {this.state.currentType === "global" && (
-                    <View className="rank__global">
-                      <View className="rank__global-title">全球榜</View>
-                      <View className="rank__globalWrap">
-                        {this.props.globalList.map(global => (
-                          <View className="rank__globalWrap-item">
-                            <Image
-                              src={global.coverImgUrl}
-                              className="rank__globalWrap-img"
-                            ></Image>
-                            <View className="rank__globalWrap-txt">
-                              {global.updateFrequency}
+                            <View className="rank__info">
+                              {offical.tracks.map((item, index2) => {
+                                return (
+                                  <View key={index2}>
+                                    {`${index2 + 1}. ${
+                                      offical.tracks[index2].first
+                                    } - ${offical.tracks[index2].second}`}
+                                  </View>
+                                );
+                              })}
                             </View>
                           </View>
                         ))}
                       </View>
-                    </View>
-                  )}
+                    )}
+                    {this.state.currentType === "global" && (
+                      <View className="rank__global">
+                        <View className="rank__global-title">全球榜</View>
+                        <View className="rank__globalWrap">
+                          {globalList.map(global => (
+                            <View
+                              className="rank__globalWrap-item"
+                              onClick={this.goToDetail.bind(this, global)}
+                            >
+                              <Image
+                                src={global.coverImgUrl}
+                                className="rank__globalWrap-img"
+                              ></Image>
+                              <View className="rank__globalWrap-txt">
+                                {global.updateFrequency}
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                    )}
+                  </ScrollView>
                 </SwiperItem>
               );
             })}
