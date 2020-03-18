@@ -6,5 +6,5 @@ export default {
   RecommendListUrl: baseUrl + "/personalized", //推荐歌单,
   getHotSingerList:baseUrl+'/top/artists',//歌手列表
   getArtistList:baseUrl + '/artist/list',
-  getRankList:baseUrl + '/toplist/detail',//排行榜数据
+  getRankList:baseUrl + '/playlist/detail',//排行榜数据
 };

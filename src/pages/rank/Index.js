@@ -48,6 +48,10 @@ class Rank extends Component {
       this.setState({ currentType: type });
     });
   }
+
+  componentWillUnmount() {
+    this.eventEmitter.remove();
+  }
   handleChange(e) {
     const { current } = e.detail;
     if (current === 1) {

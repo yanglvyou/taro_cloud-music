@@ -16,6 +16,7 @@ export default {
       yield put({ type: "saveEnterLoading", payload: { enterLoading: false } });
     },
     *fetchSingersList({ payload: category, alpha, count }, { call, put }) {
+      console.log('category: ', category);
       const { artists: singersList, more } = yield call(
         getArtistList,
         category,
