@@ -1,0 +1,194 @@
+.detail {
+  &__wrap {
+  }
+  &__topDesc {
+    background: rgba(7, 17, 27, 0.2);
+    // height: 565px;
+    &-backgroundImg {
+      position: fixed;
+      top: 160px;
+      left: 0;
+      z-index: -1;
+      object-fit: cover;
+      filter: blur(35px);
+    }
+    &-decorate {
+      // position: absolute;
+      // z-index: 10;
+      // top: 0;
+      // left: 0;
+      // width: 100%;
+      // height: 100%;
+      // background: rgba(7, 17, 27, 0.2);
+    }
+    &-info {
+      padding: 50px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    &-imgwrap {
+      height: 240px;
+      width: 240px;
+    }
+    &-img {
+      height: 240px;
+      width: 240px;
+      display: block;
+      object-fit: cover;
+    }
+    &-descWrap {
+      flex: 1;
+      margin-left: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    &-title {
+      font-size: 38px;
+      color: white;
+    }
+    &-avatar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    &-avatarImg {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      display: block;
+      object-fit: cover;
+    }
+    &-name{
+      color:#ffffff;
+      font-size:30px;
+      margin-left: 10px;
+    }
+    &-icon {
+      font-size: 24px;
+    }
+  }
+  &__menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    &-pinglun {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      .iconfont {
+        color: white;
+        font-size: 47px;
+        display: flex;
+        flex-direction: row;
+      }
+      .txt {
+        font-size: 26px;
+      }
+    }
+    &-shoucang {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      .iconfont {
+        color: white;
+        font-size: 44px;
+        display: flex;
+        flex-direction: row;
+      }
+      .txt {
+        font-size: 26px;
+      }
+    }
+    &-dianzan {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      .iconfont {
+        color: white;
+        font-size: 44px;
+        display: flex;
+        flex-direction: row;
+      }
+      .txt {
+        font-size: 26px;
+      }
+    }
+
+    &-more {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: white;
+      .iconfont {
+        color: white;
+        font-size: 44px;
+        display: flex;
+        flex-direction: row;
+      }
+      .txt {
+        font-size: 26px;
+      }
+    }
+  }
+
+  &__firstLine{
+    position: relative;
+    margin-top: 15px;
+    padding: 20px 0;
+    display: flex;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+    flex-direction: row;
+    border-bottom: 1px solid #e4e4e4;
+    // align-items: center;
+    justify-content: space-around;
+    background-color: white;
+    &-playall{
+      display:flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      margin-right: 415px;
+      .iconfont{
+        font-size:40px;
+        padding-right: 30px;
+      }
+    }
+    &-all{
+      font-size:35px;
+    }
+    &-name{
+      margin-left: 5px;
+      font-size:26px;
+      color: #bba8a8;
+    }
+    &-add{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      padding: 0 20px;
+      background-color: #d44439;
+      color:#ffffff;
+      border-top-left-radius:10px;
+      border-bottom-left-radius:10px;
+      font-size:35px;
+      .iconfont{
+        font-size:32px;
+        margin-right: 5px;
+      }
+    }
+  }
+  &__songsList{
+    background-color: #fff;
+  }
+}
