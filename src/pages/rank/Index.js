@@ -68,7 +68,6 @@ class Rank extends Component {
 
   render() {
     const height = getWindowHeight(true);
-    console.log("height: ", height);
     const globalList = this.props.globalList;
     const officialList = this.props.officialList;
     return (
@@ -158,6 +157,10 @@ class Rank extends Component {
 }
 
 Rank.defaultProps = {};
+
+Rank.config={
+  navigationStyle:"custom"
+}
 
 // function mapStateToProps(state) {
 //   const { list } = state.rankIndex;

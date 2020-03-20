@@ -20,7 +20,6 @@ const store = dvaApp.getStore();
 //   require('nerv-devtools')
 // }
 
-// const store = configStore();
 
 class App extends Component {
   config = {
@@ -35,7 +34,7 @@ class App extends Component {
       navigationBarBackgroundColor: "#fff",
       navigationBarTitleText: "taro",
       navigationBarTextStyle: "black",
-      navigationStyle: "custom"
+      // navigationStyle: "custom"
     },
     tabBar: {
       // "selectedColor": "#d44439", //颜色

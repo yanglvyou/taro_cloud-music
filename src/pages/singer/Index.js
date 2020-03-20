@@ -117,4 +117,8 @@ Singers.defaultProps = {
   singersList: []
 };
 
+Singers.config={
+  navigationStyle:"custom"
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(Singers);

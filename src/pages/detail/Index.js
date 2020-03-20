@@ -1,25 +1,51 @@
-import Taro, { useEffect, useRouter } from "@tarojs/taro";
+import Taro, {
+  useEffect,
+  useRouter,
+  usePageScroll,
+  useRef,
+  useState
+} from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 import { ScrollView, View, Image } from "@tarojs/components";
 import CustomNavigation from "../../components/customNavigation/Index";
-import { getWindowHeight } from "../../utils/util";
+import { getWindowHeight, getName } from "../../utils/util";
 import { navigateTo } from "../../utils/navigate";
 import "./Index.less";
 
 const Detail = props => {
   const { onGetAlbumList, playlist } = props;
-  console.log("props: ", props);
+  const [scrollTop, setScrollTop] = useState(0);
+  var marqueeEl = useRef(null);
+  const inputEl = useRef(null);
+  const [opacity, setOpacity] = useState(0);
   const router = useRouter();
-  console.log("router: ", router);
   useEffect(() => {
     const id = router.params.id;
     onGetAlbumList(id);
   }, []);
+  usePageScroll(res => {
+    const percent=res.scrollTop / 169;
+    setOpacity(Math.min(1,percent))
+    // setScrollTop(res.scrollTop);
+  });
+
   console.log(playlist, 22222222);
   return (
     <View className="detail">
-      <CustomNavigation background="#d44439" back searchBar></CustomNavigation>
-      <ScrollView scrollY className="detail__wrap">
+      <CustomNavigation
+        // ref={headerEl}
+        name={playlist.name}
+        background="#d44439"
+        back
+        searchBar
+      ></CustomNavigation>
+      { (
+        <View ref={marqueeEl} className="detail__marquee_container" style={{"opacity":`${opacity}`}}>
+          <View className="detail__marquee_container-marquee_text">{playlist.name}</View>
+        </View>
+      )}
+
+      <ScrollView scrollY scrollWithAnimation className="detail__wrap">
         <View className="detail__topDesc">
           <Image
             src={playlist.coverImgUrl}
@@ -40,7 +66,9 @@ const Detail = props => {
                   src={playlist.creator.avatarUrl}
                   className="detail__topDesc-avatarImg"
                 ></Image>
-                <View className="detail__topDesc-name">{playlist.creator.nickname}</View>
+                <View className="detail__topDesc-name">
+                  {playlist.creator.nickname}
+                </View>
               </View>
             </View>
           </View>
@@ -76,15 +104,22 @@ const Detail = props => {
               <Text className="collect">收藏 1.1万</Text>
             </View>
           </View>
-          <View className="detail__songsList">
-            {playlist.tracks.map((item, index) => (
-              <View>
-                <Text>{index + 1}</Text>
-                <View>
-                  <Text>{item.name}</Text>
+          <View className="detail__songsListWrap">
+            {playlist.tracks &&
+              playlist.tracks.map((item, index) => (
+                <View className="detail__songsList">
+                  <View className="detail__songsIndex">{index + 1}</View>
+                  <View className="detail__songsListInfo">
+                    <View className="detail__songsListInfo-name">
+                      {item.name}
+                    </View>
+                    <View className="detail__songsListInfo-txt">
+                      {item.ar ? getName(item.ar) : getName(item.artists)} -{" "}
+                      {item.al ? item.al.name : item.album.name}
+                    </View>
+                  </View>
                 </View>
-              </View>
-            ))}
+              ))}
           </View>
         </View>
       </ScrollView>
@@ -92,7 +127,16 @@ const Detail = props => {
   );
 };
 
-Detail.defaultProps = {};
+Detail.config = {
+  navigationStyle: "custom"
+};
+
+Detail.defaultProps = {
+  playlist: {
+    tracks: []
+  },
+  onGetAlbumList: () => {}
+};
 
 function mapStateToProps(state) {
   const { playlist } = state.detailIndex;

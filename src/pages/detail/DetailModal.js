@@ -1,4 +1,4 @@
-import { getRankList } from "../../services/rankService";
+import { getDetailList } from "../../services/rankService";
 
 export default {
   namespace: "detailIndex",
@@ -9,7 +9,7 @@ export default {
   effects: {
     *fetchDetailList({ payload: id }, { call, put }) {
       console.log("id: ", id);
-      const { playlist } = yield call(getRankList, { id });
+      const { playlist } = yield call(getDetailList, { id });
       yield put({ type: "savePlayList", payload: playlist});
     }
   },

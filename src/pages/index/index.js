@@ -6,6 +6,7 @@ import Banner from "../../components/banner/Index";
 import RecommendList from "../../components/recommendList/Index";
 import Loading from "../../components/Loading/Index";
 import { getWindowHeight } from "../../utils/util";
+import { navigateTo } from "../../utils/navigate";
 
 import "./Index.less";
 
@@ -39,6 +40,10 @@ function Index(props) {
       </ScrollView>
     </View>
   );
+}
+
+Index.config={
+  navigationStyle:"custom"
 }
 
 function mapStateToProps(state) {
