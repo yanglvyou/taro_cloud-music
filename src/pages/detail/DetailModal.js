@@ -19,6 +19,9 @@ export default {
       {
         return { ...state, playlist };
       }
+    },
+    resetPlayList(state,{payload}){
+      return {...state,playlist:[]}
     }
   }
 };

@@ -4,14 +4,23 @@ import { getBannerList } from "../services/homeService";
 export default {
   namespace: "taroGlobal",
   state: {
-    bannerList: [],
-    arr: []
-  },
-  effects: {
-    *fetchBannerList({ payload }, { call, put }) {
-      const bannerList = yield call(getBannerList);
-      console.log("bannerList: ", bannerList);
+    currentPage:{
+      name:'',
+      pathname:"",
+      search:{},
+      extra:""
     }
   },
-  reducers: {}
+  effects: {
+    // *fetchBannerList({ payload }, { call, put }) {
+    //   const bannerList = yield call(getBannerList);
+    //   console.log("bannerList: ", bannerList);
+    // }
+  },
+  reducers: {
+    updateCurrentPage(state,{payload}){
+      const currentPage={...state.currentPage,...payload};
+      return {...state,currentPage}
+    }
+  }
 };

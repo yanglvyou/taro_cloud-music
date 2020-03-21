@@ -1,0 +1,83 @@
+.skeleton{
+  &__wrapper{
+
+    &-image{
+      width: 100%;
+      height: 400px;
+      background: #f6f7f8;
+      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+     background-repeat: no-repeat;
+     background-size: 1500px 600px;
+     position: relative;
+     animation: skeletonAnimation 1s linear infinite forwards;
+    }
+    &-avater{
+      margin:30px 10px 0px;
+      display: flex;
+      flex-direction: row;
+    }
+    &-cir{
+      background: #f6f7f8;
+      height: 120px;
+      width: 120px;
+      border-radius: 120px;
+      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-repeat: no-repeat;
+      background-size: 800px 200px;
+      position: relative;
+      animation: skeletonAnimation 1s linear infinite forwards;
+    }
+    &-line{
+      margin-left: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    &-line1{
+      width: 500px;
+      height: 40px;
+      background: #f6f7f8;
+      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-repeat: no-repeat;
+      background-size: 1500px 600px;
+      position: relative;
+      animation: skeletonAnimation 1s linear infinite forwards;
+    }
+    &-line2{
+
+      width: 300px;
+      height: 40px;
+      background: #f6f7f8;
+      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-repeat: no-repeat;
+      background-size: 1500px 600px;
+      position: relative;
+      animation: skeletonAnimation 1s linear infinite forwards;
+    }
+
+    &-content{
+      margin:30px 20px 0px;
+      height: 80px;
+      width: 710px;
+      border-radius: 10px;
+      background: #f6f7f8;
+      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-repeat: no-repeat;
+      background-size: 1500px 600px;
+      position: relative;
+      animation: skeletonAnimation 1s linear infinite forwards;
+    }
+
+  }
+}
+
+
+@keyframes skeletonAnimation {
+  0% {
+      background-position: -668px 0;
+  }
+
+  100% {
+      background-position: 468px 0;
+  }
+}

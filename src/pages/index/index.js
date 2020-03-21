@@ -6,7 +6,8 @@ import Banner from "../../components/banner/Index";
 import RecommendList from "../../components/recommendList/Index";
 import Loading from "../../components/Loading/Index";
 import { getWindowHeight } from "../../utils/util";
-import { navigateTo } from "../../utils/navigate";
+// import { navigateTo } from "../../utils/navigate";
+import Skeleton from "../../components/skeleton/Index";
 
 import "./Index.less";
 
@@ -29,22 +30,24 @@ function Index(props) {
   return (
     <View className="recommendIndex">
       <CustomNavigation background="#d44439" searchBar></CustomNavigation>
-      <ScrollView scrollY style={{ height }}>
-        <View className="bannerWrap">
-          <Banner bannerList={bannerList}></Banner>
-        </View>
-        <View className="recommendListWrap">
-          <RecommendList recommendList={recommendList}></RecommendList>
-        </View>
-        {enterLoading && <Loading></Loading>}
-      </ScrollView>
+      <Skeleton loading={true} num={10}>
+        <ScrollView scrollY style={{ height }}>
+          <View className="bannerWrap">
+            <Banner bannerList={bannerList}></Banner>
+          </View>
+          <View className="recommendListWrap">
+            <RecommendList recommendList={recommendList}></RecommendList>
+          </View>
+          {/*{enterLoading && <Loading></Loading>}*/}
+        </ScrollView>
+      </Skeleton>
     </View>
   );
 }
 
-Index.config={
-  navigationStyle:"custom"
-}
+Index.config = {
+  navigationStyle: "custom"
+};
 
 function mapStateToProps(state) {
   const { bannerList, recommendList, enterLoading } = state.recommendIndex;

@@ -1,5 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
+import {connect} from "@tarojs/redux";
 import "./Index.less";
 
 function getSystemInfo() {
@@ -94,6 +95,8 @@ function getSystemInfo() {
   }
 }
 let globalSystemInfo = getSystemInfo();
+
+@connect(({taroGlobal})=>({currentPageName:taroGlobal.currentPage.name}))
 class CustomNavigation extends Component {
   static options = {
     addGlobalClass: true
@@ -114,6 +117,11 @@ class CustomNavigation extends Component {
   }
   handleBackClick() {
     const pages = Taro.getCurrentPages();
+    console.log('pages: ', pages);
+    console.log(this.props.currentPageName,3333333333);
+    if(this.props.currentPageName==="detailIndex"){
+      this.props.dispatch({type:"detailIndex/resetPlayList"})
+    }
     if (pages.length >= 2) {
       Taro.navigateBack({
         delta: this.props.delta

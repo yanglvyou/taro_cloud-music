@@ -27,7 +27,8 @@ class App extends Component {
       "pages/index/Index",
       "pages/singer/Index",
       "pages/rank/Index",
-      "pages/detail/Index"
+      "pages/detail/Index",
+      "pages/skeleton/Index"
     ],
     window: {
       backgroundTextStyle: "light",
