@@ -59,6 +59,14 @@
 					"id": -1,
 					"name": "pages/skeleton/Index",
 					"pathName": "pages/skeleton/Index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/singersDetail/Index",
+					"pathName": "pages/singersDetail/Index",
+					"query": "id=12429072",
 					"scene": null
 				}
 			]

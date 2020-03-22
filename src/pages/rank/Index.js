@@ -49,6 +49,11 @@ class Rank extends Component {
     });
   }
 
+  componentDidShow(){
+      this.props.dispatch({type:"detailIndex/resetPlayList"})
+
+  }
+
   componentWillUnmount() {
     this.eventEmitter.remove();
   }
@@ -73,7 +78,7 @@ class Rank extends Component {
     return (
       <View className="rank">
         <CustomNavigation background="#d44439" searchBar></CustomNavigation>
-        <ScrollView scrollY style={{ height }}>
+        <ScrollView scrollY style={{height}} scrollWithAnimation>
           <View className="rank__nav">
             <RankTypeNav
               currentType={this.state.currentType}

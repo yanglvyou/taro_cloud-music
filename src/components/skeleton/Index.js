@@ -5,7 +5,7 @@ import "./Index.less";
 
 function Skeleton(props) {
   // const [contentArr,setContentArr]=useState([]);
-  const contentArr = new Array(10).fill("");
+  const contentArr = new Array(15).fill("");
   console.log("props: ", props);
   // useEffect(() => {
   //  setContentArr(new Array(props.num).fill(""))
@@ -27,8 +27,14 @@ function Skeleton(props) {
           </View>
   </View>*/}
         <View className="skeleton__wrapper-contentWrap">
-          {contentArr.map(() => (
-            <View className="skeleton__wrapper-content"></View>
+          {contentArr.map((item, index) => (
+            <View
+              className={classNames(
+                "skeleton__wrapper-content",
+                index === 0 && "skeleton__wrapper-item1",
+                index === 1 && "skeleton__wrapper-item2"
+              )}
+            ></View>
           ))}
         </View>
       </View>

@@ -1,83 +1,185 @@
-.skeleton{
-  &__wrapper{
-
-    &-image{
+.skeleton {
+  &__wrapper {
+    &-image {
       width: 100%;
       height: 400px;
       background: #f6f7f8;
-      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
-     background-repeat: no-repeat;
-     background-size: 1500px 600px;
-     position: relative;
-     animation: skeletonAnimation 1s linear infinite forwards;
+      background-image: -webkit-linear-gradient(
+        left,
+        #f6f7f8 0%,
+        #edeef1 20%,
+        #f6f7f8 40%,
+        #f6f7f8 100%
+      );
+      background-repeat: no-repeat;
+      background-size: 1500px 600px;
+      position: relative;
+      animation: skeletonAnimation 1s linear infinite forwards;
     }
-    &-avater{
-      margin:30px 10px 0px;
+    &-avater {
+      margin: 30px 10px 0px;
       display: flex;
       flex-direction: row;
     }
-    &-cir{
+    &-cir {
       background: #f6f7f8;
       height: 120px;
       width: 120px;
       border-radius: 120px;
-      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-image: -webkit-linear-gradient(
+        left,
+        #f6f7f8 0%,
+        #edeef1 20%,
+        #f6f7f8 40%,
+        #f6f7f8 100%
+      );
       background-repeat: no-repeat;
       background-size: 800px 200px;
       position: relative;
       animation: skeletonAnimation 1s linear infinite forwards;
     }
-    &-line{
+    &-line {
       margin-left: 30px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
     }
-    &-line1{
+    &-line1 {
       width: 500px;
       height: 40px;
       background: #f6f7f8;
-      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-image: -webkit-linear-gradient(
+        left,
+        #f6f7f8 0%,
+        #edeef1 20%,
+        #f6f7f8 40%,
+        #f6f7f8 100%
+      );
       background-repeat: no-repeat;
       background-size: 1500px 600px;
       position: relative;
       animation: skeletonAnimation 1s linear infinite forwards;
     }
-    &-line2{
-
+    &-line2 {
       width: 300px;
       height: 40px;
       background: #f6f7f8;
-      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-image: -webkit-linear-gradient(
+        left,
+        #f6f7f8 0%,
+        #edeef1 20%,
+        #f6f7f8 40%,
+        #f6f7f8 100%
+      );
       background-repeat: no-repeat;
       background-size: 1500px 600px;
       position: relative;
       animation: skeletonAnimation 1s linear infinite forwards;
     }
 
-    &-content{
-      margin:30px 20px 0px;
-      height: 80px;
+    &-content {
+      margin: 30px 20px 0px;
+      height: 50px;
       width: 710px;
       border-radius: 10px;
       background: #f6f7f8;
-      background-image: -webkit-linear-gradient(left, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+      background-image: -webkit-linear-gradient(
+        left,
+        #f6f7f8 0%,
+        #edeef1 20%,
+        #f6f7f8 40%,
+        #f6f7f8 100%
+      );
       background-repeat: no-repeat;
       background-size: 1500px 600px;
       position: relative;
       animation: skeletonAnimation 1s linear infinite forwards;
     }
+    view:nth-child(3) {
+      width: 500px;
+      transform-origin: left center;
+      animation: nth3 1s linear infinite forwards;
+      // background-color: red;
+    }
 
+    &-item1 {
+      width: 360px;
+      transform-origin: left center;
+      animation: nth1 1s linear infinite forwards;
+    }
+    &-item2 {
+      width: 690px;
+      transform-origin: left center;
+      animation: nth2 1s linear infinite forwards;
+    }
   }
 }
 
-
 @keyframes skeletonAnimation {
   0% {
-      background-position: -668px 0;
+    background-position: -668px 0;
   }
 
   100% {
-      background-position: 468px 0;
+    background-position: 468px 0;
   }
+}
+@keyframes nth3 {
+  0% {
+    background-position: -668px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+  50% {
+    transform: scaleX(0.6);
+  }
+  100% {
+    transform: scaleX(0.5);
+  }
+
+  // 100% {
+  //     background-position: 468px 0;
+  // }
+}
+
+@keyframes nth1 {
+  0% {
+    background-position: -668px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+  50% {
+    transform: scaleX(0.6);
+  }
+  100% {
+    transform: scaleX(0.3);
+  }
+
+  // 100% {
+  //     background-position: 468px 0;
+  // }
+}
+
+@keyframes nth2 {
+  0% {
+    background-position: -668px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+  50% {
+    transform: scaleX(0.8);
+  }
+  100% {
+    transform: scaleX(0.7);
+  }
+
+  // 100% {
+  //     background-position: 468px 0;
+  // }
 }

@@ -1,10 +1,11 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View, ScrollView, Image, Button, Text } from "@tarojs/components";
+import Taro, { useState, useEffect,useDidShow } from "@tarojs/taro";
+import { View, ScrollView, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
 import HorizenItem from "../../components/horizen-item/Index";
 import { categoryTypes, alphaTypes } from "../../api/data";
 import Loading from "../../components/Loading/Index";
+import { navigateTo } from "../../utils/navigate";
 import { getWindowHeight } from "../../utils/util";
 
 import "./Index.less";
@@ -48,6 +49,13 @@ const Singers = props => {
   useEffect(() => {
     onGetHotSingersList(0);
   }, []);
+  useDidShow(()=>{
+    props.dispatch({type:"singersDetailIndex/resetSingersDetailList"})
+  })
+  const goToDetail = singer => {
+    navigateTo({ pathname: "/pages/singersDetail/Index", search:{id:singer.id } });
+    console.log("singer: ", singer.id);
+  };
   return (
     <View className="user">
       <CustomNavigation background="#d44439" searchBar></CustomNavigation>
@@ -75,7 +83,11 @@ const Singers = props => {
         className="user__wrap"
       >
         {singersList.map((singer, index) => (
-          <View key={index} className="user__list">
+          <View
+            key={singer.accountId}
+            className="user__list"
+            onClick={() => goToDetail(singer)}
+          >
             <Image
               lazyLoad
               src={singer.picUrl}
@@ -117,8 +129,8 @@ Singers.defaultProps = {
   singersList: []
 };
 
-Singers.config={
-  navigationStyle:"custom"
-}
+Singers.config = {
+  navigationStyle: "custom"
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Singers);

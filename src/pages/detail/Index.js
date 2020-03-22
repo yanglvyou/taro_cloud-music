@@ -34,6 +34,7 @@ const Detail = props => {
   useDidHide(() => {
     console.log('componentDidHide')
   })
+  const height=getWindowHeight(true);
   console.log(playlist, 22222222);
   return (
     <View className="detail">

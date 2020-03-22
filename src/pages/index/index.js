@@ -1,4 +1,4 @@
-import Taro, { useEffect } from "@tarojs/taro";
+import Taro, { useEffect,useDidShow } from "@tarojs/taro";
 import { View, ScrollView, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
@@ -25,13 +25,16 @@ function Index(props) {
     onGetRecommendList();
     changeEnterLoading();
   }, []);
+  useDidShow(()=>{
+    this.props.dispatch({type:"detailIndex/resetPlayList"})
+  })
 
   const height = getWindowHeight(true);
   return (
     <View className="recommendIndex">
       <CustomNavigation background="#d44439" searchBar></CustomNavigation>
-      <Skeleton loading={true} num={10}>
-        <ScrollView scrollY style={{ height }}>
+      <Skeleton loading={enterLoading} num={10}>
+        <ScrollView scrollY scrollWithAnimation>
           <View className="bannerWrap">
             <Banner bannerList={bannerList}></Banner>
           </View>

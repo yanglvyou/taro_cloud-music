@@ -6,5 +6,6 @@ export default {
   getHotSingerList: baseUrl + "/top/artists", //歌手列表
   getArtistList: baseUrl + "/artist/list",
   getRankList: baseUrl + "/toplist/detail", //排行榜数据
-  getDetailList: baseUrl +"/playlist/detail" //排行榜数据
+  getDetailList: baseUrl +"/playlist/detail", //排行榜数据
+  getSingersDetailList: baseUrl +"/artists" //排行榜数据
 };
