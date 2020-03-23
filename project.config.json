@@ -68,6 +68,13 @@
 					"pathName": "pages/singersDetail/Index",
 					"query": "id=12429072",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/canvas/Index",
+					"pathName": "pages/canvas/Index",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
