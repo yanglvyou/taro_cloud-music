@@ -33,7 +33,6 @@ const SingerDetail = props => {
     console.log("componentDidHide");
   });
   const height=getWindowHeight(true)
-  console.log(artist, 22222222);
   return (
     <View className="detail">
       <CustomNavigation
