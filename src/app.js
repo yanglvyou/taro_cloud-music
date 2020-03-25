@@ -30,7 +30,10 @@ class App extends Component {
       "pages/detail/Index",
       "pages/skeleton/Index",
       "pages/singersDetail/Index",
-      "pages/canvas/Index"
+      "pages/canvas/Index",
+      "pages/canvas_demo1/Index",
+      // "pages/canvas_demo2/Index",
+      // "pages/canvas_demo3/Index",
     ],
     window: {
       backgroundTextStyle: "light",

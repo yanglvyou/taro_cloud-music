@@ -1,21 +1,5 @@
 
 import { CanvasContext } from "@tarojs/taro";
-// import { IText, IIMage, ILine, IBlock } from '../types';
-
-// export interface IDrawRadiusRectData {
-//   x: number;
-//   y: number;
-//   w: number;
-//   h: number;
-//   r: number;
-// }
-
-// export interface IDrawOptions {
-//   ctx: CanvasContext;
-//   toPx: (rpx: number, int?: boolean, factor?: number) => number;
-//   toRpx: (px: number, int?: boolean, factor?: number) => number;
-// }
-
 /**
   * @description 绘制圆角矩形
   * @param { object } drawData - 绘制数据
@@ -51,6 +35,7 @@ export function _drawRadiusRect(drawData, drawOptions) {
  * @param { Array | Object } text 数组 或者 对象
  */
 export function _getTextWidth(_text, drawOptions) {
+  console.log('_text: ', _text);
   const { ctx, toPx, toRpx } = drawOptions;
   let texts = [];
   if (Array.isArray(_text)) {
@@ -65,6 +50,7 @@ export function _getTextWidth(_text, drawOptions) {
     marginLeft = 0,
     marginRight = 0
   }) => {
+    console.log(toPx(fontSize),"========1");
     ctx.setFontSize(toPx(fontSize));
     let _textWidth = 0;
     if (typeof text === 'object') {
@@ -106,7 +92,8 @@ export function _drawSingleText(drawData, drawOptions) {
   const { ctx, toPx } = drawOptions;
   ctx.save();
   ctx.beginPath();
-  ctx.font = fontStyle + " " + fontWeight + " " + toPx(fontSize, true) + "px " + fontFamily
+  ctx.font = fontStyle + " " + fontWeight + " " + toPx(fontSize) + "px " + fontFamily
+  console.log('ctx.font: ', ctx.font);
   ctx.setGlobalAlpha(opacity);
   // ctx.setFontSize(toPx(fontSize));
 
@@ -142,6 +129,7 @@ export function _drawSingleText(drawData, drawOptions) {
       }
     }
     textWidth = width;
+    console.log('textWidth: ', textWidth);
   } else {
     textArr.push(text);
   }
@@ -204,17 +192,9 @@ export function _drawSingleText(drawData, drawOptions) {
  * @param { string } [params.fontFamily="sans-serif"] - 小程序默认字体为 'sans-serif', 请输入小程序支持的字体
  */
 export function drawText(params, drawOptions) {
-  // const { ctx, toPx, toRpx } = drawOptions;
   const {
     x,
     y, text, baseLine,
-    // fontSize,
-    // color,
-    // textAlign,
-    // opacity = 1,
-    // width,
-    // lineNum,
-    // lineHeight
   } = params;
   if (Array.isArray(text)) {
     let preText = { x, y, baseLine };
@@ -224,6 +204,7 @@ export function drawText(params, drawOptions) {
         ...preText,
       }), drawOptions);
       preText.x += textWidth + (item.marginRight || 0); // 下一段字的 x 轴为上一段字 x + 上一段字宽度
+      console.log('preText: ', preText);
     })
   } else {
     _drawSingleText(params, drawOptions);
@@ -366,7 +347,9 @@ export function drawBlock(blockData, drawOptions) {
     }
     ctx.restore();
   }
+  console.log(borderWidth,'nnnnnnnnnnnn');
   if (borderWidth) {
+    console.log(borderColor,"qqqqqqqqq");
     // 画线
     ctx.save();
     ctx.setGlobalAlpha(opacity);

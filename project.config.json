@@ -75,6 +75,12 @@
 					"pathName": "pages/canvas/Index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/canvas_demo1/Index",
+					"pathName": "pages/canvas_demo1/Index",
+					"scene": null
 				}
 			]
 		}

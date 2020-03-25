@@ -18,7 +18,7 @@ export default class CanvasDrawer extends PureComponent {
       pxHeight: 0,
       debug: false,
       factor: 0,
-      pixelRatio: 1
+      pixelRatio: 0
     };
     this.canvasId = "canvas";
     this.drawArr = [];
@@ -26,6 +26,8 @@ export default class CanvasDrawer extends PureComponent {
 
   componentWillMount() {
     const { config } = this.props;
+    console.log('config: ', config);
+    // 返回canvas的高度
     const height = getHeight(config);
     this.initCanvas(config.width, height, config.debug);
   }
@@ -46,9 +48,9 @@ export default class CanvasDrawer extends PureComponent {
    * @param { number } [factor = this.state.factor] - 转化因子
    * @returns { number }
    */
-  toPx = (rpx, factor) => {
-    console.log(99999);
-    return rpx * factor * this.state.pixelRatio;
+  toPx = (rpx) => {
+    // console.log(rpx * this.state.factor * this.state.pixelRatio,"toPx");
+    return Math.ceil(rpx * this.state.factor * this.state.pixelRatio);
   }
   /**
    * @description px => rpx
@@ -57,15 +59,15 @@ export default class CanvasDrawer extends PureComponent {
    * @param { number } [factor = this.state.factor] - 转化因子
    * @returns { number }
    */
-  toRpx = (px,  factor) => {
-    return px / factor;
+  toRpx = (px) => {
+    // console.log(px / this.state.factor,"toRpx");
+    return Math.ceil(px / this.state.factor);
   }
 
   onCreate = () => {
     const { onCreateFail, config } = this.props;
-    console.log('config: ', config);
     if (config["hide-loading"] === false) {
-      Taro.showLoading({ mask: true, title: "生成中..." });
+      Taro.showLoading({ mask: true, title: "海报生成中..." });
     }
     return this.downloadResourceTransit()
       .then(() => {
@@ -106,7 +108,7 @@ export default class CanvasDrawer extends PureComponent {
     });
   };
 
-  downloadResource = ({ images = [], pixelRatio = 1 }) => {
+  downloadResource = ({ images, pixelRatio }) => {
     const drawList = [];
     let imagesTemp = images;
 
@@ -139,116 +141,111 @@ export default class CanvasDrawer extends PureComponent {
   //初始化canvas
   initCanvas = (w, h, debug) => {
     return new Promise((resolve) => {
-      this.setState(
-        {
+      this.setState({
           pxWidth: this.toPx(w),
           pxHeight: this.toPx(h),
           debug
-        },resolve);
+        },resolve());
     });
   };
 
-  create = config => {
+
+  create = (config) => {
     this.ctx = Taro.createCanvasContext(this.canvasId, this.$scope);
-    console.log('this.ctx: ', this.ctx);
     const height = getHeight(config);
-    console.log('height: ', height);
     // 设置 pixelRatio
-    this.setState(
-      {
-        pixelRatio: config.pixelRatio || 1
-      },
-      () => {
-        console.log(10000);
-        this.initCanvas(config.width, height, config.debug)
-          .then(() => {
-            // 设置画布底色
-            if (config.backgroundColor) {
-              console.log(1111111);
-              this.ctx.save();
-              this.ctx.setFillStyle(config.backgroundColor);
-              this.ctx.fillRect(0, 0, this.toPx(config.width), this.toPx(height));
-              this.ctx.restore();
-            }
-            const {
-              texts = [],
-              // images = [],
-              blocks = [],
-              lines = []
-            } = config;
-            const queue = this.drawArr
-              .concat(
-                texts.map(item => {
-                  item.type = "text";
-                  item.zIndex = item.zIndex || 0;
-                  return item;
-                })
-              )
-              .concat(
-                blocks.map(item => {
-                  item.type = "block";
-                  item.zIndex = item.zIndex || 0;
-                  return item;
-                })
-              )
-              .concat(
-                lines.map(item => {
-                  item.type = "line";
-                  item.zIndex = item.zIndex || 0;
-                  return item;
-                })
-              );
-            // 按照顺序排序
-            queue.sort((a, b) => a.zIndex - b.zIndex);
+    this.setState({
+      pixelRatio: config.pixelRatio || 1,
+    }, () => {
+      this.initCanvas(config.width, height, config.debug)
+        .then(() => {
+          // 设置画布底色
+          if (config.backgroundColor) {
+            this.ctx.save();
+            this.ctx.setFillStyle(config.backgroundColor);
+            this.ctx.fillRect(0, 0, this.toPx(config.width), this.toPx(height));
+            this.ctx.restore();
+          }
+          const {
+            texts,
+            blocks,
+            lines,
+          } = config;
 
-            queue.forEach(item => {
-              let drawOptions = {
-                ctx: this.ctx || CanvasContext,
-                toPx: this.toPx,
-                toRpx: this.toRpx
-              };
-              if (item.type === "image") {
-                if (drawOptions.ctx !== null) {
-                  drawImage(item, drawOptions);
-                }
-              } else if (item.type === "text") {
-                if (drawOptions.ctx !== null) {
-                  drawText(item, drawOptions);
-                }
-              } else if (item.type === "block") {
-                if (drawOptions.ctx !== null) {
-                  drawBlock(item, drawOptions);
-                }
-              } else if (item.type === "line") {
-                if (drawOptions.ctx !== null) {
-                  drawLine(item, drawOptions);
-                }
+          console.log(blocks,6666666);
+          const queue = this.drawArr
+            .concat(texts.map((item) => {
+              console.log('item: ', item);
+              item.type = 'text';
+              item.zIndex = item.zIndex || 0;
+              return item;
+            }))
+            .concat(blocks.map((item) => {
+              item.type = 'block';
+              item.zIndex = item.zIndex || 0;
+              return item;
+            }))
+            .concat(lines.map((item) => {
+              item.type = 'line';
+              item.zIndex = item.zIndex || 0;
+              return item;
+            }));
+          // 按照顺序排序
+          queue.sort((a, b) => a.zIndex - b.zIndex);
+          console.log('queue: aaaaaaaa', queue);
+
+          queue.forEach((item) => {
+            let drawOptions = {
+              ctx: (this.ctx),
+              toPx: this.toPx,
+              toRpx: this.toRpx,
+            }
+            if (item.type === 'image') {
+              if (drawOptions.ctx !== null) {
+                drawImage(item, drawOptions);
               }
-            });
+            } else if (item.type === 'text') {
+              if (drawOptions.ctx !== null) {
+                drawText(item, drawOptions)
+              }
+            } else if (item.type === 'block') {
+              if (drawOptions.ctx !== null) {
+                drawBlock(item, drawOptions)
+              }
 
-            const res = Taro.getSystemInfoSync();
-            const platform = res.platform;
-            let time = 0;
-            if (platform === "android") {
-              // 在安卓平台，经测试发现如果海报过于复杂在转换时需要做延时，要不然样式会错乱
-              time = 300;
+            } else if (item.type === 'line') {
+              if (drawOptions.ctx !== null) {
+                drawLine(item, drawOptions)
+              }
             }
-            this.ctx.draw(false, () => {
-              setTimeout(() => {
-                this.getTempFile(null);
-              }, time);
-            });
-          })
-          .catch(err => {
-            Taro.showToast({ icon: "none", title: err.errMsg || "生成失败" });
-            console.error(err);
           });
-      }
-    );
-  };
+
+          const res = Taro.getSystemInfoSync();
+          const platform = res.platform;
+          let time = 0;
+          if (platform === 'android') {
+            // 在安卓平台，经测试发现如果海报过于复杂在转换时需要做延时，要不然样式会错乱
+            time = 300;
+          }
+          this.ctx.draw(true, () => {
+            setTimeout(() => {
+              this.getTempFile(null);
+            }, time);
+          });
+        })
+        .catch((err) => {
+          Taro.showToast({ icon: 'none', title: err.errMsg || '生成失败' });
+          console.error(err);
+        });
+    });
+
+  }
+
+
+
+
 
   getTempFile = otherOptions => {
-    console.log(this.canvasId,333333);
     const { onCreateSuccess, onCreateFail } = this.props;
     Taro.canvasToTempFilePath(
       {
@@ -289,6 +286,9 @@ export default class CanvasDrawer extends PureComponent {
       return (
         <Canvas
           canvasId={this.canvasId}
+          // type="2d"
+          // id="myCanvas"
+          // ref="myCanvas"
           style={`width:${pxWidth}px; height:${pxHeight}px;`}
           className={`${debug ? "debug" : "pro"} canvas`}
         ></Canvas>

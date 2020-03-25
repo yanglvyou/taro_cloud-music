@@ -2,6 +2,7 @@ import Taro from "@tarojs/taro";
 /** 获取最大高度 */
 
 export const getHeight = config => {
+  //文本高度
   const getTextHeight = text => {
     let fontHeight = text.lineHeight || text.fontSize;
     let height = 0;
@@ -41,18 +42,6 @@ export const getHeight = config => {
     return config.height;
   }
 };
-
-
-/**
-   * @description rpx => px 基础方法
-   * @param { number } rpx - 需要转换的数值
-   * @param { boolean} int - 是否为 int
-   * @param { number } [factor = this.state.factor] - 转化因子
-   * @returns { number }
-   */
-  export const toPx = (rpx,factor,pixelRatio) => {
-    return rpx * factor * pixelRatio;
-  }
 
 
   /**
@@ -118,17 +107,13 @@ export function downloadImageAndInfo(image, index, toRpxFunc, pixelRatio) {
  */
 export function downImage(imageUrl) {
   return new Promise((resolve, reject) => {
-    // if (/^http/.test(imageUrl) && !new RegExp(wx.env.USER_DATA_PATH).test(imageUrl))
     if (
       /^http/.test(imageUrl) &&
-      // @ts-ignore
-      !new RegExp((wx).env.USER_DATA_PATH).test(imageUrl) &&
-      !/^http:\/\/tmp/.test(imageUrl)
+      // env.USER_DATA_PATH 文件系统中的用户目录路径
+      !new RegExp(wx.env.USER_DATA_PATH).test(imageUrl)
     ) {
       Taro.downloadFile({
         url: (imageUrl),
-        // TODO
-        // url: mapHttpToHttps(imageUrl),
         success: (res) => {
           if (res.statusCode === 200) {
             resolve(res.tempFilePath);
@@ -155,7 +140,7 @@ export function downImage(imageUrl) {
  */
 export function getImageInfo(imgPath, index) {
   return new Promise((resolve, reject) => {
-    Taro.getImageInfo({
+    Taro.getImageInfo({//获取图片信息。网络图片需先配置download域名才能生效。
       src: imgPath
     })
       .then(res => {

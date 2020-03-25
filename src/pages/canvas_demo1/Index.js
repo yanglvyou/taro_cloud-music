@@ -166,7 +166,7 @@ class TaroCanvas extends Component {
               "https://s.newscdn.cn/file/2019/05/f91ad75e-d1db-44f6-9bd5-71a44fc74971.jpg"
           }
         ],
-        lines:[]
+        lines: []
       },
       demoConfig: {
         width: 750,
@@ -282,12 +282,12 @@ class TaroCanvas extends Component {
         ]
       },
       rssConfig: {
-        width: 750,
-        height: 750,
+        width:750,
+        height:750,
         backgroundColor: "#fff",
         debug: false,
         pixelRatio: 2,
-        'hide-loading':false,
+        "hide-loading": false,
         blocks: [
           {
             x: 0,
@@ -296,9 +296,9 @@ class TaroCanvas extends Component {
             height: 750,
             paddingLeft: 0,
             paddingRight: 0,
-            borderWidth: 1,
+            borderWidth: 0,
             borderColor: 'red',
-            backgroundColor: "#EFF3F5",
+            backgroundColor: "rgba(0,0,0,0.5)",
             borderRadius: 0
           },
           {
@@ -308,8 +308,8 @@ class TaroCanvas extends Component {
             height: 670,
             paddingLeft: 0,
             paddingRight: 0,
-            borderWidth: 1,
-            borderColor: 'red',
+            borderWidth: 0,
+            borderColor: "red",
             backgroundColor: "#fff",
             borderRadius: 12
           }
@@ -405,7 +405,6 @@ class TaroCanvas extends Component {
   };
 
   onCreateSuccess = result => {
-    console.log("result: ", result);
     const { tempFilePath, errMsg } = result;
     Taro.hideLoading();
     console.log("onCreateSuccess");
@@ -464,35 +463,6 @@ class TaroCanvas extends Component {
   render() {
     return (
       <View className="index">
-        <View>
-          <View className="flex-row">
-            <Button
-              onClick={()=>{
-                Taro.navigateTo({
-                  url: "/pages/canvas_demo1/Index"
-                });
-              }}
-            >
-              绘制1
-            </Button>
-            <Button
-              onClick={this.canvasDrawFunc.bind(this, this.state.jdConfig)}
-            >
-              绘制2
-            </Button>
-            <Button
-              onClick={this.canvasDrawFunc.bind(this, this.state.demoConfig)}
-            >
-              绘制3
-            </Button>
-          </View>
-          <View className="flex-row">
-            <Button onClick={this.saveToAlbum}>保存到相册</Button>
-            <Button onClick={this.reset}>重置</Button>
-            {/*<Button onClick={this.toSimplePage}>简易版Demo</Button>*/}
-          </View>
-        </View>
-
         <View className="shareImage-cont">
           <Image
             className="shareImage"
@@ -507,6 +477,17 @@ class TaroCanvas extends Component {
               onCreateFail={this.onCreateFail}
             />
           )}
+
+          <Button
+            className="btn btn-gradient"
+            onClick={
+              !this.state.shareImage
+                ? this.canvasDrawFunc.bind(this, this.state.rssConfig)
+                : this.saveToAlbum.bind(this)
+            }
+          >
+            {!this.state.shareImage ? "绘制海报" : "保存到相册"}
+          </Button>
         </View>
       </View>
     );
