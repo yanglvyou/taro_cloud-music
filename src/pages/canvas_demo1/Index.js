@@ -293,7 +293,7 @@ class TaroCanvas extends Component {
             x: 0,
             y: 0,
             width: 750,
-            height: 750,
+            height: 850,
             paddingLeft: 0,
             paddingRight: 0,
             borderWidth: 0,
@@ -305,7 +305,7 @@ class TaroCanvas extends Component {
             x: 40,
             y: 40,
             width: 670,
-            height: 670,
+            height: 770,
             paddingLeft: 0,
             paddingRight: 0,
             borderWidth: 0,
@@ -317,8 +317,8 @@ class TaroCanvas extends Component {
         texts: [
           {
             x: 80,
-            y: 420,
-            text: "国产谍战 真人演出,《隐形守护者》凭什么成为Steam第一?",
+            y: 620,
+            text: "三亚贵妃芒,【福返】被阳光吻过的芒香",
             fontSize: 32,
             color: "#000",
             opacity: 1,
@@ -331,7 +331,7 @@ class TaroCanvas extends Component {
           },
           {
             x: 80,
-            y: 590,
+            y: 760,
             text: "长按扫描二维码阅读完整内容",
             fontSize: 24,
             color: "#666",
@@ -344,8 +344,8 @@ class TaroCanvas extends Component {
           },
           {
             x: 80,
-            y: 640,
-            text: "分享来自 「 RssFeed 」",
+            y: 710,
+            text: "分享来自 「 真的有料 」",
             fontSize: 24,
             color: "#666",
             opacity: 1,
@@ -358,9 +358,9 @@ class TaroCanvas extends Component {
         ],
         images: [
           {
-            url: "http://pic.juncao.cc/rssfeed/images/demo.png",
+            url: "https://img.zhendeyouliao.com/Product/20031018180047101.jpg",
             width: 670,
-            height: 320,
+            height: 520,
             y: 40,
             x: 40,
             borderRadius: 12,
@@ -371,9 +371,9 @@ class TaroCanvas extends Component {
           },
           {
             url: "https://pic.juncao.cc/cms/images/minapp.jpg",
-            width: 110,
-            height: 110,
-            y: 570,
+            width: 90,
+            height: 90,
+            y: 700,
             x: 560,
             borderRadius: 100,
             borderWidth: 0,
@@ -382,10 +382,10 @@ class TaroCanvas extends Component {
         ],
         lines: [
           {
-            startY: 540,
+            startY: 680,
             startX: 80,
             endX: 670,
-            endY: 541,
+            endY: 681,
             width: 1,
             color: "#eee"
           }
@@ -453,6 +453,13 @@ class TaroCanvas extends Component {
     }
   };
 
+  onPosterSuccess() {
+    Taro.previewImage({
+          current: this.state.shareImage,
+          urls: [this.state.shareImage]
+      })
+  }
+
   reset = () => {
     this.setState({
       shareImage: null,
@@ -467,6 +474,7 @@ class TaroCanvas extends Component {
           <Image
             className="shareImage"
             src={this.state.shareImage}
+            onClick={this.onPosterSuccess.bind(this)}
             mode="widthFix"
             lazy-load
           />

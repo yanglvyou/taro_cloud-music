@@ -90,7 +90,7 @@ export default class CanvasDrawer extends PureComponent {
     const { config } = this.props;
     return new Promise((resolve, reject) => {
       if (config.images && config.images.length > 0) {
-        this.downloadResource({
+        this.downloadResource({//下载图片等相关操作
           images: config.images,
           pixelRatio: config.pixelRatio || 1
         })
@@ -159,12 +159,12 @@ export default class CanvasDrawer extends PureComponent {
     }, () => {
       this.initCanvas(config.width, height, config.debug)
         .then(() => {
-          // 设置画布底色
+          // 设置画布的底色
           if (config.backgroundColor) {
-            this.ctx.save();
-            this.ctx.setFillStyle(config.backgroundColor);
-            this.ctx.fillRect(0, 0, this.toPx(config.width), this.toPx(height));
-            this.ctx.restore();
+            this.ctx.save();//保存绘图上下文
+            this.ctx.setFillStyle(config.backgroundColor);//填充颜色
+            this.ctx.fillRect(0, 0, this.toPx(config.width), this.toPx(height));//填充一个矩形
+            this.ctx.restore();//恢复之前保存的绘图上下文
           }
           const {
             texts,
@@ -172,10 +172,8 @@ export default class CanvasDrawer extends PureComponent {
             lines,
           } = config;
 
-          console.log(blocks,6666666);
           const queue = this.drawArr
             .concat(texts.map((item) => {
-              console.log('item: ', item);
               item.type = 'text';
               item.zIndex = item.zIndex || 0;
               return item;
@@ -192,8 +190,6 @@ export default class CanvasDrawer extends PureComponent {
             }));
           // 按照顺序排序
           queue.sort((a, b) => a.zIndex - b.zIndex);
-          console.log('queue: aaaaaaaa', queue);
-
           queue.forEach((item) => {
             let drawOptions = {
               ctx: (this.ctx),

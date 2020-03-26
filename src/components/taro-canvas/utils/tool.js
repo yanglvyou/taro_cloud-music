@@ -63,10 +63,10 @@ export function downloadImageAndInfo(image, index, toRpxFunc, pixelRatio) {
         let sx;
         let sy;
         const borderRadius = image.borderRadius || 0;
-        const setWidth = image.width;
-        const setHeight = image.height;
-        const width = toRpxFunc(imgInfo.width / pixelRatio);
-        const height = toRpxFunc(imgInfo.height / pixelRatio);
+        const setWidth = image.width;//绘制宽度
+        const setHeight = image.height;//绘制高度
+        const width = toRpxFunc(imgInfo.width / pixelRatio);//源图宽度
+        const height = toRpxFunc(imgInfo.height / pixelRatio);//源图高度
 
         if (width / height <= setWidth / setHeight) {
           sx = 0;
@@ -91,6 +91,7 @@ export function downloadImageAndInfo(image, index, toRpxFunc, pixelRatio) {
           w: setWidth,
           h: setHeight,
         }
+        console.log(result,"++++++++++++++");
         resolve(result);
       })
       .catch(err => {
@@ -126,6 +127,7 @@ export function downImage(imageUrl) {
         },
       });
     } else {
+      console.log(imageUrl,"本地地址");
       // 支持本地地址
       resolve(imageUrl);
     }
