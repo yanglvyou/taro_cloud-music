@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Image } from "@tarojs/components";
+import { View, Button, Image, ScrollView } from "@tarojs/components";
 import TaroCanvasDrawer from "../../components/taro-canvas/Index";
+import { getWindowHeight } from "../../utils/util";
 
 import "./Index.less";
 
@@ -282,8 +283,8 @@ class TaroCanvas extends Component {
         ]
       },
       rssConfig: {
-        width:750,
-        height:750,
+        width: 750,
+        height: 750,
         backgroundColor: "#fff",
         debug: false,
         pixelRatio: 2,
@@ -297,8 +298,8 @@ class TaroCanvas extends Component {
             paddingLeft: 0,
             paddingRight: 0,
             borderWidth: 0,
-            borderColor: 'red',
-            backgroundColor: "rgba(0,0,0,0.5)",
+            borderColor: "red",
+            backgroundColor: "rgba(255,255,255,0.8)",
             borderRadius: 0
           },
           {
@@ -308,7 +309,7 @@ class TaroCanvas extends Component {
             height: 770,
             paddingLeft: 0,
             paddingRight: 0,
-            borderWidth: 0,
+            borderWidth: 2,
             borderColor: "red",
             backgroundColor: "#fff",
             borderRadius: 12
@@ -360,7 +361,7 @@ class TaroCanvas extends Component {
           {
             url: "https://img.zhendeyouliao.com/Product/20031018180047101.jpg",
             width: 670,
-            height: 520,
+            height: 620,
             y: 40,
             x: 40,
             borderRadius: 12,
@@ -371,8 +372,8 @@ class TaroCanvas extends Component {
           },
           {
             url: "https://pic.juncao.cc/cms/images/minapp.jpg",
-            width: 90,
-            height: 90,
+            width: 100,
+            height: 100,
             y: 700,
             x: 560,
             borderRadius: 100,
@@ -387,7 +388,7 @@ class TaroCanvas extends Component {
             endX: 670,
             endY: 681,
             width: 1,
-            color: "#eee"
+            color: "#ccc"
           }
         ]
       }
@@ -455,9 +456,9 @@ class TaroCanvas extends Component {
 
   onPosterSuccess() {
     Taro.previewImage({
-          current: this.state.shareImage,
-          urls: [this.state.shareImage]
-      })
+      current: this.state.shareImage,
+      urls: [this.state.shareImage]
+    });
   }
 
   reset = () => {
@@ -468,35 +469,38 @@ class TaroCanvas extends Component {
   };
 
   render() {
+    const height = getWindowHeight(true);
     return (
       <View className="index">
-        <View className="shareImage-cont">
-          <Image
-            className="shareImage"
-            src={this.state.shareImage}
-            onClick={this.onPosterSuccess.bind(this)}
-            mode="widthFix"
-            lazy-load
-          />
-          {this.state.canvasStatus && (
-            <TaroCanvasDrawer
-              config={this.state.config}
-              onCreateSuccess={this.onCreateSuccess}
-              onCreateFail={this.onCreateFail}
+        <ScrollView scrollY style={{height}}>
+          <View className="shareImage-cont">
+            <Image
+              className="shareImage"
+              src={this.state.shareImage}
+              onClick={this.onPosterSuccess.bind(this)}
+              mode="widthFix"
+              lazy-load
             />
-          )}
+            {this.state.canvasStatus && (
+              <TaroCanvasDrawer
+                config={this.state.config}
+                onCreateSuccess={this.onCreateSuccess}
+                onCreateFail={this.onCreateFail}
+              />
+            )}
 
-          <Button
-            className="btn btn-gradient"
-            onClick={
-              !this.state.shareImage
-                ? this.canvasDrawFunc.bind(this, this.state.rssConfig)
-                : this.saveToAlbum.bind(this)
-            }
-          >
-            {!this.state.shareImage ? "绘制海报" : "保存到相册"}
-          </Button>
-        </View>
+            <Button
+              className="btn btn-gradient"
+              onClick={
+                !this.state.shareImage
+                  ? this.canvasDrawFunc.bind(this, this.state.rssConfig)
+                  : this.saveToAlbum.bind(this)
+              }
+            >
+              {!this.state.shareImage ? "绘制海报" : "保存到相册"}
+            </Button>
+          </View>
+        </ScrollView>
       </View>
     );
   }
