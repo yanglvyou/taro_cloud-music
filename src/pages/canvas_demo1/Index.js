@@ -284,8 +284,8 @@ class TaroCanvas extends Component {
       },
       rssConfig: {
         width: 750,
-        height: 750,
-        backgroundColor: "#fff",
+        height: 950,
+        backgroundColor:"#55efc4",
         debug: false,
         pixelRatio: 2,
         "hide-loading": false,
@@ -294,31 +294,31 @@ class TaroCanvas extends Component {
             x: 0,
             y: 0,
             width: 750,
-            height: 850,
+            height: 950,
             paddingLeft: 0,
             paddingRight: 0,
-            borderWidth: 0,
-            borderColor: "red",
+            borderWidth: 2,
+            borderColor: "#eee",
             backgroundColor: "rgba(255,255,255,0.8)",
             borderRadius: 0
           },
           {
             x: 40,
-            y: 40,
+            y: 140,
             width: 670,
             height: 770,
             paddingLeft: 0,
             paddingRight: 0,
             borderWidth: 2,
-            borderColor: "red",
+            borderColor: "#eee",
             backgroundColor: "#fff",
-            borderRadius: 12
+            borderRadius: 0
           }
         ],
         texts: [
           {
             x: 80,
-            y: 620,
+            y: 720,
             text: "三亚贵妃芒,【福返】被阳光吻过的芒香",
             fontSize: 32,
             color: "#000",
@@ -332,7 +332,7 @@ class TaroCanvas extends Component {
           },
           {
             x: 80,
-            y: 760,
+            y: 860,
             text: "长按扫描二维码阅读完整内容",
             fontSize: 24,
             color: "#666",
@@ -345,7 +345,7 @@ class TaroCanvas extends Component {
           },
           {
             x: 80,
-            y: 710,
+            y: 810,
             text: "分享来自 「 真的有料 」",
             fontSize: 24,
             color: "#666",
@@ -374,7 +374,7 @@ class TaroCanvas extends Component {
             url: "https://pic.juncao.cc/cms/images/minapp.jpg",
             width: 100,
             height: 100,
-            y: 700,
+            y: 800,
             x: 560,
             borderRadius: 100,
             borderWidth: 0,
@@ -383,10 +383,10 @@ class TaroCanvas extends Component {
         ],
         lines: [
           {
-            startY: 680,
+            startY: 780,
             startX: 80,
             endX: 670,
-            endY: 681,
+            endY: 781,
             width: 1,
             color: "#ccc"
           }

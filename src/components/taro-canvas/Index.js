@@ -278,6 +278,7 @@ export default class CanvasDrawer extends PureComponent {
 
   render() {
     const { pxWidth, pxHeight, debug } = this.state;
+    console.log('pxWidth, pxHeight: ', pxWidth, pxHeight);
     if (pxWidth && pxHeight) {
       return (
         <Canvas

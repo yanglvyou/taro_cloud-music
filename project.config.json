@@ -80,6 +80,13 @@
 					"id": -1,
 					"name": "pages/canvas_demo1/Index",
 					"pathName": "pages/canvas_demo1/Index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/input-emoji/Index",
+					"pathName": "pages/input-emoji/Index",
 					"scene": null
 				}
 			]

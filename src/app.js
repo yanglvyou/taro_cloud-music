@@ -32,7 +32,7 @@ class App extends Component {
       "pages/singersDetail/Index",
       "pages/canvas/Index",
       "pages/canvas_demo1/Index",
-      // "pages/canvas_demo2/Index",
+      "pages/input-emoji/Index",
       // "pages/canvas_demo3/Index",
     ],
     window: {
