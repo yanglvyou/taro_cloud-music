@@ -27,6 +27,7 @@ class App extends Component {
       "pages/index/Index",
       "pages/singer/Index",
       "pages/rank/Index",
+      "pages/usercenter/Index",
       "pages/detail/Index",
       "pages/skeleton/Index",
       "pages/singersDetail/Index",
@@ -37,7 +38,7 @@ class App extends Component {
     ],
     window: {
       backgroundTextStyle: "light",
-      navigationBarBackgroundColor: "#fff",
+      navigationBarBackgroundColor: "#d44439",
       navigationBarTitleText: "taro",
       navigationBarTextStyle: "black",
       // navigationStyle: "custom"
@@ -54,14 +55,20 @@ class App extends Component {
         {
           pagePath: "pages/singer/Index",
           text: "歌手",
-          iconPath: "./assets/images/tabbar/user.png",
-          selectedIconPath: "./assets/images/tabbar/user-active.png"
+          iconPath: "./assets/images/tabbar/store.png",
+          selectedIconPath: "./assets/images/tabbar/store-active.png"
         },
         {
           pagePath: "pages/rank/Index",
           text: "排行榜",
           iconPath: "./assets/images/tabbar/cate.png",
           selectedIconPath: "./assets/images/tabbar/cate-active.png"
+        },
+        {
+          pagePath: "pages/usercenter/Index",
+          text: "我的",
+          iconPath: "./assets/images/tabbar/user.png",
+          selectedIconPath: "./assets/images/tabbar/user-active.png"
         }
       ]
     }

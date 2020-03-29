@@ -86,7 +86,7 @@ const Detail = props => {
             </View>
             <View className="detail__menu">
               <View className="detail__menu-pinglun">
-                <Text className="iconfont icon-pinglun"></Text>
+                <Text className="iconfont2 icon-pinglun"></Text>
                 <Text className="txt">评论</Text>
               </View>
               <View className="detail__menu-shoucang">
