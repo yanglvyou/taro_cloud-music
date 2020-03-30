@@ -34,6 +34,7 @@ class App extends Component {
       "pages/canvas/Index",
       "pages/canvas_demo1/Index",
       "pages/input-emoji/Index",
+      "pages/login/Index",
       // "pages/canvas_demo3/Index",
     ],
     window: {

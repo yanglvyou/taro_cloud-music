@@ -5,7 +5,7 @@
 	"appid": "wxbcb691b6b7d640c7",
 	"setting": {
 		"urlCheck": false,
-		"es6": false,
+		"es6": true,
 		"postcss": false,
 		"minified": false,
 		"newFeature": true,
@@ -25,6 +25,7 @@
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"libVersion": "2.10.3",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -87,6 +88,13 @@
 					"id": -1,
 					"name": "pages/input-emoji/Index",
 					"pathName": "pages/input-emoji/Index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/login/Index",
+					"pathName": "pages/login/Index",
 					"scene": null
 				}
 			]
