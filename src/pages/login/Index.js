@@ -6,7 +6,6 @@ import api from "../../api/index";
 import "./Index.less";
 
 const Login = () => {
-  console.log( 99999999);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showLoading, setShowLoading] = useState(false);
@@ -36,7 +35,7 @@ const Login = () => {
       if (code === 200) {
         Taro.setStorageSync("userInfo", res);
         Taro.setStorageSync("userId", res.account.id);
-        Taro.navigateTo({
+        Taro.switchTab({
           url: "/pages/usercenter/Index"
         });
       }
