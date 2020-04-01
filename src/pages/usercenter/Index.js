@@ -8,7 +8,7 @@ import "./Index.less";
 
 const Index = () => {
   const height = getWindowHeight(true);
-  const [userInfo,setUserInfo ]= useState(Taro.getStorageSync("userInfo"));
+  const [userInfo, setUserInfo] = useState(Taro.getStorageSync("userInfo"));
 
   const [searchValue, setSearchValue] = useState("");
   console.log("userInfo: ", userInfo);
@@ -43,29 +43,91 @@ const Index = () => {
           }}
         ></AtSearchBar>
         {userInfo && (
-          <View className="usercenter__header">
-            <View className="usercenter__header__left">
-              <Image
-                src={userInfo.profile.avatarUrl}
-                className="usercenter__header__left-userImg"
-              ></Image>
-              <View className="usercenter__header__left-userInfo">
-                <View className="usercenter__header__left-userName">
-                  {" "}
-                  {userInfo.profile.nickname}
-                </View>
-                <View className="usercenter__header__left-userLv">
-                  <Text>LV.6</Text>
+          <View>
+            <View className="usercenter__header">
+              <View className="usercenter__header__left">
+                <Image
+                  src={userInfo.profile.avatarUrl}
+                  className="usercenter__header__left-userImg"
+                ></Image>
+                <View className="usercenter__header__left-userInfo">
+                  <View className="usercenter__header__left-userName">
+                    {userInfo.profile.nickname}
+                  </View>
+                  <View className="usercenter__header__left-userLv">
+                    <Text>LV.6</Text>
+                  </View>
                 </View>
               </View>
+              <View
+                className="usercenter__header__right"
+                onClick={() => {
+                  logOut();
+                }}
+              >
+                退出登录
+              </View>
             </View>
-            <View
-              className="usercenter__header__right"
-              onClick={() => {
-                logOut();
-              }}
-            >
-              退出登录
+            <View className="usercenter__count">
+              <View className="usercenter__count__dynamic">
+                <View className="usercenter__count__dynamic-num">
+                  {userInfo.profile.eventCount || 0}
+                </View>
+                <View className="usercenter__count__dynamic-txt">动态</View>
+              </View>
+
+              <View className="usercenter__count__attention">
+                <View className="usercenter__count__attention-num">
+                  {userInfo.profile.newFollows || 0}
+                </View>
+                <View className="usercenter__count__attention-txt">关注</View>
+              </View>
+
+              <View className="usercenter__count__fans">
+                <View className="usercenter__count__fans-num">
+                  {userInfo.profile.followeds || 0}
+                </View>
+                <View className="usercenter__count__fans-txt">粉丝</View>
+              </View>
+            </View>
+
+            <View className="usercenter__user_brief">
+              <View className="usercenter__user_brief__item">
+                <Image
+                  className="usercenter__user_brief__item-img"
+                  src={require("../../assets/images/my/recent_play.png")}
+                />
+                <View
+                  className="usercenter__user_brief__item-text"
+                >
+                  <Text>最近播放</Text>
+                  <Text className="at-icon at-icon-chevron-right"></Text>
+                </View>
+              </View>
+              <View className="usercenter__user_brief__item">
+                <Image
+                  className="usercenter__user_brief__item-img"
+                  src={require("../../assets/images/my/my_radio.png")}
+                />
+                <View
+                  className="usercenter__user_brief__item-text"
+                >
+                  <Text>我的电台</Text>
+                  <Text className="at-icon at-icon-chevron-right"></Text>
+                </View>
+              </View>
+              <View className="usercenter__user_brief__item">
+                <Image
+                  className="usercenter__user_brief__item-img"
+                  src={require("../../assets/images/my/my_collection_icon.png")}
+                />
+                <View
+                  className="usercenter__user_brief__item-text"
+                >
+                  <Text>我的收藏</Text>
+                  <Text className="at-icon at-icon-chevron-right"></Text>
+                </View>
+              </View>
             </View>
           </View>
         )}
