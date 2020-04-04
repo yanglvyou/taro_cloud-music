@@ -1,5 +1,5 @@
 import Taro, { useState, useDidShow } from "@tarojs/taro";
-import { AtSearchBar, AtIcon } from "taro-ui";
+import { AtSearchBar, AtModal } from "taro-ui";
 import { getWindowHeight } from "../../utils/util";
 import { View, ScrollView } from "@tarojs/components";
 import request from "../../api/config";
@@ -7,6 +7,7 @@ import api from "../../api/index";
 import "./Index.less";
 
 const Index = () => {
+  const [isLogoutModal, setIsLogoutModal] = useState(false);
   const height = getWindowHeight(true);
   const [userInfo, setUserInfo] = useState(Taro.getStorageSync("userInfo"));
 
@@ -24,11 +25,21 @@ const Index = () => {
   };
 
   function logOut() {
+    setIsLogoutModal(true);
+
+  }
+
+  function handleCancel(){
+    setIsLogoutModal(false);
+  }
+
+  function handleConfirm(){
     Taro.clearStorage();
-    request.get(api.userLogOut).then(res => {
+    request.get(api.userLogOut).then((res) => {
       console.log("退出登录", res);
     });
     Taro.navigateTo({ url: "/pages/login/Index" });
+    setIsLogoutModal(false);
   }
 
   return (
@@ -97,9 +108,7 @@ const Index = () => {
                   className="usercenter__user_brief__item-img"
                   src={require("../../assets/images/my/recent_play.png")}
                 />
-                <View
-                  className="usercenter__user_brief__item-text"
-                >
+                <View className="usercenter__user_brief__item-text">
                   <Text>最近播放</Text>
                   <Text className="at-icon at-icon-chevron-right"></Text>
                 </View>
@@ -109,9 +118,7 @@ const Index = () => {
                   className="usercenter__user_brief__item-img"
                   src={require("../../assets/images/my/my_radio.png")}
                 />
-                <View
-                  className="usercenter__user_brief__item-text"
-                >
+                <View className="usercenter__user_brief__item-text">
                   <Text>我的电台</Text>
                   <Text className="at-icon at-icon-chevron-right"></Text>
                 </View>
@@ -121,9 +128,7 @@ const Index = () => {
                   className="usercenter__user_brief__item-img"
                   src={require("../../assets/images/my/my_collection_icon.png")}
                 />
-                <View
-                  className="usercenter__user_brief__item-text"
-                >
+                <View className="usercenter__user_brief__item-text">
                   <Text>我的收藏</Text>
                   <Text className="at-icon at-icon-chevron-right"></Text>
                 </View>
@@ -145,6 +150,14 @@ const Index = () => {
           </View>
         )}
       </ScrollView>
+      <AtModal
+        isOpened={isLogoutModal}
+        title="确定退出登录?"
+        cancelText="取消"
+        confirmText="确认"
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      />
     </View>
   );
 };

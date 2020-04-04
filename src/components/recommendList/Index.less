@@ -10,6 +10,11 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    &::after{
+      content:"";
+      display:block;
+      width:65vw;
+    }
   }
   &__recommendList {
     position: relative;
@@ -23,6 +28,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 5px;
   }
   &__desc {
     width: 240px;
