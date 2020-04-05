@@ -95,6 +95,13 @@
 					"id": -1,
 					"name": "pages/login/Index",
 					"pathName": "pages/login/Index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/recentPlay/Index",
+					"pathName": "pages/recentPlay/Index",
 					"scene": null
 				}
 			]

@@ -10,4 +10,6 @@ export default {
   getSingersDetailList: baseUrl +"/artists", //排行榜数据
   userLogin: baseUrl +"/login/cellphone",//登录
   userLogOut: baseUrl +"/logout",//登录
+  getUserPlayList:baseUrl+'/user/playlist',//我的创建的歌单
+  getrecentPlayList:baseUrl+'/user/record',//我的创建的歌单
 };

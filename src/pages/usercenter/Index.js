@@ -1,6 +1,6 @@
 import Taro, { useState, useDidShow } from "@tarojs/taro";
 import { AtSearchBar, AtModal } from "taro-ui";
-import { getWindowHeight } from "../../utils/util";
+import { getWindowHeight ,formatCount} from "../../utils/util";
 import { View, ScrollView } from "@tarojs/components";
 import request from "../../api/config";
 import api from "../../api/index";
@@ -8,6 +8,8 @@ import "./Index.less";
 
 const Index = () => {
   const [isLogoutModal, setIsLogoutModal] = useState(false);
+  const [userCreateList, setUserCreateList] = useState([]);
+  const [userCollectList, setUserCollectList] = useState([]);
   const height = getWindowHeight(true);
   const [userInfo, setUserInfo] = useState(Taro.getStorageSync("userInfo"));
 
@@ -15,9 +17,21 @@ const Index = () => {
   console.log("userInfo: ", userInfo);
   useDidShow(() => {
     setUserInfo(Taro.getStorageSync("userInfo"));
-    // if (!userInfo) {
-    //   Taro.navigateTo({ url: "/pages/login/Index" });
-    // }
+  });
+  useDidShow(() => {
+    const { userId } = userInfo.profile;
+    request
+      .get(api.getUserPlayList, { uid: userId, limit: 300 })
+      .then((res) => {
+        if (res.playlist && res.playlist.length > 0) {
+          setUserCreateList(
+            res.playlist.filter((item) => item.userId === userId)
+          );
+          setUserCollectList(
+            res.playlist.filter((item) => item.userId !== userId)
+          );
+        }
+      });
   });
 
   const goToSearch = () => {
@@ -26,20 +40,23 @@ const Index = () => {
 
   function logOut() {
     setIsLogoutModal(true);
-
   }
 
-  function handleCancel(){
+  function handleCancel() {
     setIsLogoutModal(false);
   }
 
-  function handleConfirm(){
+  function handleConfirm() {
     Taro.clearStorage();
     request.get(api.userLogOut).then((res) => {
       console.log("退出登录", res);
     });
     Taro.navigateTo({ url: "/pages/login/Index" });
     setIsLogoutModal(false);
+  }
+
+  function JumpPage(name){
+    Taro.navigateTo({url:`/pages/${name}/Index`})
   }
 
   return (
@@ -108,7 +125,7 @@ const Index = () => {
                   className="usercenter__user_brief__item-img"
                   src={require("../../assets/images/my/recent_play.png")}
                 />
-                <View className="usercenter__user_brief__item-text">
+                <View className="usercenter__user_brief__item-text" onClick={()=>{JumpPage("recentPlay")}}>
                   <Text>最近播放</Text>
                   <Text className="at-icon at-icon-chevron-right"></Text>
                 </View>
@@ -132,6 +149,55 @@ const Index = () => {
                   <Text>我的收藏</Text>
                   <Text className="at-icon at-icon-chevron-right"></Text>
                 </View>
+              </View>
+            </View>
+            <View className="usercenter__playlist">
+              <View className="usercenter__playlist-title">
+                我创建的歌单
+                <Text className="usercenter__playlist-desc">({userCreateList.length})</Text>
+              </View>
+              <View>
+                {userCreateList.map((item) => (
+                  <View key={item.id}  className="usercenter__playlist-item">
+                    <Image
+                      className="usercenter__playlist-img"
+                      src={`${item.coverImgUrl}?imageView&thumbnail=250x0`}
+                    />
+                    <View className="usercenter__playlist-info">
+                      <View className="usercenter__playlist-name">
+                        {item.name}
+                      </View>
+                      <View className="usercenter__playlist-count">
+                        {item.trackCount}首, 播放{formatCount(item.playCount)}次
+                      </View>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            <View className="usercenter__playlist">
+              <View className="usercenter__playlist-title">
+              我收藏的歌单
+                <Text className="usercenter__playlist-desc">({userCollectList.length})</Text>
+              </View>
+              <View>
+                {userCollectList.map((item) => (
+                  <View key={item.id}  className="usercenter__playlist-item">
+                    <Image
+                      className="usercenter__playlist-img"
+                      src={`${item.coverImgUrl}?imageView&thumbnail=250x0`}
+                    />
+                    <View className="usercenter__playlist-info">
+                      <View className="usercenter__playlist-name">
+                        {item.name}
+                      </View>
+                      <View className="usercenter__playlist-count">
+                        {item.trackCount}首, 播放{formatCount(item.playCount)}次
+                      </View>
+                    </View>
+                  </View>
+                ))}
               </View>
             </View>
           </View>
@@ -161,5 +227,9 @@ const Index = () => {
     </View>
   );
 };
+
+Index.config={
+  navigationBarTitleText:"我的"
+}
 
 export default Index;

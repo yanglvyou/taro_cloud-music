@@ -35,13 +35,14 @@ class App extends Component {
       "pages/canvas_demo1/Index",
       "pages/input-emoji/Index",
       "pages/login/Index",
+      "pages/recentPlay/Index"
       // "pages/canvas_demo3/Index",
     ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#d44439",
       navigationBarTitleText: "taro",
-      navigationBarTextStyle: "black",
+      navigationBarTextStyle: "white",
       // navigationStyle: "custom"
     },
     tabBar: {
