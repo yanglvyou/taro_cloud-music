@@ -1,8 +1,9 @@
-import Taro, { PureComponent} from "@tarojs/taro";
+import Taro, { PureComponent } from "@tarojs/taro";
 import { ScrollView, View } from "@tarojs/components";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { getWindowHeight } from "../../utils/util";
 import request from "../../api/config";
+import { navigateTo } from "../../utils/navigate";
 import api from "../../api/index";
 import "./Index.less";
 
@@ -15,12 +16,12 @@ class Index extends PureComponent {
       recordList: [],
     };
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getData();
   }
 
   getData() {
-    const {currentTab}=this.state;
+    const { currentTab } = this.state;
     const userId = Taro.getStorageSync("userId");
     const dataType = currentTab === 0 ? "weekData" : "allData";
     request
@@ -30,21 +31,29 @@ class Index extends PureComponent {
       })
       .then((res) => {
         if (res && res[dataType] && res[dataType].length > 0) {
-          this.setState({recordList:res[dataType]})
+          this.setState({ recordList: res[dataType] });
         }
       });
   }
 
   switchTab(val) {
-    console.log('val: ', val);
-    this.setState({currentTab:val,recordList:[]},()=>{
+    console.log("val: ", val);
+    this.setState({ currentTab: val, recordList: [] }, () => {
       this.getData();
-    })
+    });
+  }
+
+  playSong(songId, canPlay) {
+    if (canPlay) {
+      navigateTo({ url: "/pages/songDetail/Index", params: { id: songId } });
+      return;
+    }
+    Taro.showToast({title:"无法播放",icon:"none"});
   }
 
   render() {
     const height = getWindowHeight(true);
-    const { recordList, currentTab, tabList } = this.state
+    const { recordList, currentTab, tabList } = this.state;
     return (
       <View className="recentPlay">
         <ScrollView scrollY scrollWithAnimation>
@@ -55,22 +64,24 @@ class Index extends PureComponent {
             onClick={this.switchTab.bind(this)}
           >
             <AtTabsPane current={currentTab} index={0}>
-              <View className="recentPlay__wrapper" >
+              <View className="recentPlay__wrapper">
                 {recordList.length > 0 &&
-                  recordList.map((item,index) => (
-                    <View key={item.song.id} className="recentPlay__music" style={Object.assign(
-                      {
+                  recordList.map((item, index) => (
+                    <View
+                      key={item.song.id}
+                      className="recentPlay__music"
+                      style={Object.assign({
                         animationDelay: `${index / recordList.length}s`,
-                        animationDuration: '1s'
-                      }
-                    )}>
+                        animationDuration: "1s",
+                      })}
+                    >
                       <View
                         className="recentPlay__music__info"
-                        // onClick={this.playSong.bind(
-                        //   this,
-                        //   item.song.id,
-                        //   item.song.st !== -200
-                        // )}
+                        onClick={this.playSong.bind(
+                          this,
+                          item.song.id,
+                          item.song.st !== -200
+                        )}
                       >
                         <View className="recentPlay__music__info__name">
                           {item.song.name}
@@ -93,12 +104,15 @@ class Index extends PureComponent {
             <AtTabsPane current={currentTab} index={1}>
               <View className="recentPlay__wrapper">
                 {recordList.length > 0 &&
-                  recordList.map((item,index) => (
-                    <View key={item.song.id} className="recentPlay__music"  style={Object.assign(
-                      {
+                  recordList.map((item, index) => (
+                    <View
+                      key={item.song.id}
+                      className="recentPlay__music"
+                      style={Object.assign({
                         animationDelay: `${index / recordList.length}s`,
-                        animationDuration:'1s'
-                      })}>
+                        animationDuration: "1s",
+                      })}
+                    >
                       <View
                         className="recentPlay__music__info"
                         // onClick={this.playSong.bind(
