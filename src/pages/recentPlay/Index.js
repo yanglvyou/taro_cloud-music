@@ -1,5 +1,6 @@
 import Taro, { PureComponent } from "@tarojs/taro";
 import { ScrollView, View } from "@tarojs/components";
+import { connect } from "@tarojs/redux";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { getWindowHeight } from "../../utils/util";
 import request from "../../api/config";
@@ -7,13 +8,39 @@ import { navigateTo } from "../../utils/navigate";
 import api from "../../api/index";
 import "./Index.less";
 
+@connect(
+  ({ song }) => ({
+    playListDetailInfo: song.playListDetailInfo,
+    recentTab: song.recentTab
+  }),
+  dispatch => ({
+    getSongInfo() {
+      dispatch(getSongInfo());
+    },
+    updateCanplayList(payload) {
+      dispatch({
+        type: "song/updateCanPlayList",
+        payload
+      });
+    },
+    updateRecentTab(payload) {
+      dispatch({
+        type: "song/updateRecentTab",
+        payload
+      });
+    },
+    updatePlayStatus() {
+      dispatch(updatePlayStatus());
+    }
+  })
+)
 class Index extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      currentTab: 0,
+      currentTab: props.recentTab || 0,
       tabList: [{ title: "最近七天" }, { title: "全部" }],
-      recordList: [],
+      recordList: []
     };
   }
   componentDidMount() {
@@ -27,9 +54,9 @@ class Index extends PureComponent {
     request
       .get(api.getrecentPlayList, {
         uid: userId,
-        type: currentTab === 0 ? 1 : 0,
+        type: currentTab === 0 ? 1 : 0
       })
-      .then((res) => {
+      .then(res => {
         if (res && res[dataType] && res[dataType].length > 0) {
           this.setState({ recordList: res[dataType] });
         }
@@ -43,12 +70,37 @@ class Index extends PureComponent {
     });
   }
 
+  saveData(songId) {
+    const { recordList, currentTab } = this.state;
+    const tempList = recordList.map(item => {
+      let temp = {};
+      temp.name = item.song.name;
+      temp.id = item.song.id;
+      temp.ar = item.song.ar;
+      temp.al = item.song.al;
+      temp.copyright = item.song.copyright;
+      temp.st = item.song.st;
+      return temp;
+    });
+    const canPlayList = tempList.filter(item => {
+      return item.st !== -200;
+    });
+    this.props.updateCanplayList({
+      canPlayList,
+      currentSongId: songId
+    });
+    this.props.updateRecentTab({
+      recentTab: currentTab
+    });
+  }
+
   playSong(songId, canPlay) {
     if (canPlay) {
+      this.saveData(songId);
       navigateTo({ url: "/pages/songDetail/Index", params: { id: songId } });
       return;
     }
-    Taro.showToast({title:"无法播放",icon:"none"});
+    Taro.showToast({ title: "无法播放", icon: "none" });
   }
 
   render() {
@@ -72,7 +124,7 @@ class Index extends PureComponent {
                       className="recentPlay__music"
                       style={Object.assign({
                         animationDelay: `${index / recordList.length}s`,
-                        animationDuration: "1s",
+                        animationDuration: "1s"
                       })}
                     >
                       <View
@@ -110,7 +162,7 @@ class Index extends PureComponent {
                       className="recentPlay__music"
                       style={Object.assign({
                         animationDelay: `${index / recordList.length}s`,
-                        animationDuration: "1s",
+                        animationDuration: "1s"
                       })}
                     >
                       <View
@@ -146,7 +198,7 @@ class Index extends PureComponent {
 }
 
 Index.config = {
-  navigationBarTitleText: "最近播放",
+  navigationBarTitleText: "最近播放"
 };
 
 export default Index;
