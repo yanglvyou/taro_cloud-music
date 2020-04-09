@@ -42,10 +42,10 @@ export default {
     recentTab: 0
   },
   effects: {
-    *getSongInfo({ payload }, { call, put }) {
-      const bannerList = yield call(getBannerList);
-      console.log("bannerList: ", bannerList);
-    }
+    // *getSongInfo({ payload }, { call, put }) {
+    //   const bannerList = yield call(getBannerList);
+    //   console.log("bannerList: ", bannerList);
+    // }
   },
   reducers: {
     updateCanPlayList(state, { payload: { canPlayList, currentSongId } }) {
@@ -65,7 +65,7 @@ export default {
         recentTab
       };
     },
-    getSongInfo(state, { payload: { currentSongInfo } }) {
+    saveSongInfo(state, { payload: { currentSongInfo } }) {
       let currentSongIndex = state.canPlayList.findIndex(
         item => item.id === currentSongInfo.id
       );

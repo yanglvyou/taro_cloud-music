@@ -104,6 +104,21 @@
 					"id": -1,
 					"name": "pages/recentPlay/Index",
 					"pathName": "pages/recentPlay/Index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/scrollIntoView",
+					"pathName": "pages/scrollIntoView",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/songDetail/Index",
+					"pathName": "pages/songDetail/Index",
+					"query": "id=95843",
 					"scene": null
 				}
 			]

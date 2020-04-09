@@ -37,7 +37,7 @@ class App extends Component {
       "pages/login/Index",
       "pages/recentPlay/Index",
       "pages/songDetail/Index",
-      // "pages/canvas_demo3/Index",
+      "pages/scrollIntoView",
     ],
     window: {
       backgroundTextStyle: "light",

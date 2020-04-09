@@ -97,7 +97,7 @@ class Index extends PureComponent {
   playSong(songId, canPlay) {
     if (canPlay) {
       this.saveData(songId);
-      navigateTo({ url: "/pages/songDetail/Index", params: { id: songId } });
+      navigateTo({ pathname: "/pages/songDetail/Index", search: { id: songId } });
       return;
     }
     Taro.showToast({ title: "无法播放", icon: "none" });
