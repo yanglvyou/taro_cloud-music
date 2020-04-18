@@ -82,6 +82,9 @@ export default {
         currentSongIndex,
         canPlayList
       };
+    },
+    changePlayMode(state,{payload:{playMode}}){
+      return {...state,playMode}
     }
   }
 };

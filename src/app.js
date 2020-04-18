@@ -46,6 +46,7 @@ class App extends Component {
       navigationBarTextStyle: "white",
       // navigationStyle: "custom"
     },
+    requiredBackgroundModes: ["audio"],
     tabBar: {
       // "selectedColor": "#d44439", //颜色
       list: [

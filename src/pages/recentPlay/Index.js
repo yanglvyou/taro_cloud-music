@@ -97,7 +97,10 @@ class Index extends PureComponent {
   playSong(songId, canPlay) {
     if (canPlay) {
       this.saveData(songId);
-      navigateTo({ pathname: "/pages/songDetail/Index", search: { id: songId } });
+      navigateTo({
+        pathname: "/pages/songDetail/Index",
+        search: { id: songId }
+      });
       return;
     }
     Taro.showToast({ title: "无法播放", icon: "none" });
@@ -122,19 +125,17 @@ class Index extends PureComponent {
                     <View
                       key={item.song.id}
                       className="recentPlay__music"
+                      onClick={this.playSong.bind(
+                        this,
+                        item.song.id,
+                        item.song.st !== -200
+                      )}
                       style={Object.assign({
                         animationDelay: `${index / recordList.length}s`,
                         animationDuration: "1s"
                       })}
                     >
-                      <View
-                        className="recentPlay__music__info"
-                        onClick={this.playSong.bind(
-                          this,
-                          item.song.id,
-                          item.song.st !== -200
-                        )}
-                      >
+                      <View className="recentPlay__music__info">
                         <View className="recentPlay__music__info__name">
                           {item.song.name}
                         </View>
