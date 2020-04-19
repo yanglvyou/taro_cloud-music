@@ -1,4 +1,5 @@
 import Taro from "@tarojs/taro";
+import { likeMusic,getLikeMusicList } from "../../services/songDetailService";
 export default {
   namespace: "song",
   state: {
@@ -42,10 +43,16 @@ export default {
     recentTab: 0
   },
   effects: {
-    // *getSongInfo({ payload }, { call, put }) {
-    //   const bannerList = yield call(getBannerList);
-    //   console.log("bannerList: ", bannerList);
-    // }
+    *likeMusic({ payload: { id, like } }, { call, put }) {
+      console.log("id,like: ", id, like);
+      const { code } = yield call(likeMusic, id, like);
+      yield put({ type: "updateLikeMusicList", payload: { like, id } });
+    },
+    *getLikeMusicList({ payload: { id, like } }, { call, put }) {
+      console.log("id,like: ", id, like);
+      const { ids } = yield call(getLikeMusicList, id);
+      yield put({ type: "getLikeMusicList", payload: {likeMusicList:ids } });
+    }
   },
   reducers: {
     updateCanPlayList(state, { payload: { canPlayList, currentSongId } }) {
@@ -69,7 +76,7 @@ export default {
       let currentSongIndex = state.canPlayList.findIndex(
         item => item.id === currentSongInfo.id
       );
-      let canPlayList=state.canPlayList.map((item, index) => {
+      let canPlayList = state.canPlayList.map((item, index) => {
         item.current = false;
         if (currentSongIndex === index) {
           item.current = true;
@@ -83,8 +90,25 @@ export default {
         canPlayList
       };
     },
-    changePlayMode(state,{payload:{playMode}}){
-      return {...state,playMode}
+    changePlayMode(state, { payload: { playMode } }) {
+      return { ...state, playMode };
+    },
+    updatePlayStatus(state, { payload: { isPlaying } }) {
+      return { ...state, isPlaying };
+    },
+    updateLikeMusicList(state, { payload: { like, id } }) {
+      let list = [];
+      if (like) {
+        list = state.likeMusicList.concat([id]);
+      } else {
+        state.likeMusicList.forEach(item => {
+          if (item !== id) list.push(item);
+        });
+      }
+      return { ...state, likeMusicList: list };
+    },
+    getLikeMusicList(state,{payload:{likeMusicList}}){
+      return {...state,likeMusicList}
     }
   }
 };

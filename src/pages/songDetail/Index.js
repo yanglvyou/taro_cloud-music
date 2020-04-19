@@ -5,6 +5,7 @@ import classnames from "classnames";
 import request from "../../api/config";
 import api from "../../api/index";
 import ProgressBar from "../../components/progressBar/Index";
+import CLyric from "../../components/CLyric/Index";
 import { parse_lrc, formatPlayTime } from "../../utils/util";
 import "./Index.less";
 const backgroundAudioManager = Taro.getBackgroundAudioManager();
@@ -38,7 +39,7 @@ class Index extends PureComponent {
       firstEnter: true,
       switchStar: false,
       playPercent: 0,
-      currentTime:"0:00"//歌曲播放时间
+      currentTime: "0:00" //歌曲播放时间
     };
   }
 
@@ -50,7 +51,7 @@ class Index extends PureComponent {
       Taro.getBackgroundAudioPlayerState({
         success(res) {
           if (res.status !== 2) {
-            // that.updateLrc(res.currentPosition)
+            that.updateLrc(res.currentPosition);
             that.updateProgress(res.currentPosition);
           }
         }
@@ -59,30 +60,32 @@ class Index extends PureComponent {
     backgroundAudioManager.onPause(() => {
       that.setState({
         isPlaying: false
-      })
-    })
+      });
+    });
     backgroundAudioManager.onPlay(() => {
       that.setState({
         isPlaying: true
-      })
-    })
+      });
+    });
     backgroundAudioManager.onEnded(() => {
-      const { playMode } = this.props.song
-      console.log('playMode: ', playMode);
-      const routes = Taro.getCurrentPages()
-      console.log('routes: ', routes);
-      const currentRoute = routes[routes.length - 1].route
-      console.log('currentRoute: ', currentRoute);
+      const { playMode } = this.props.song;
+      const routes = Taro.getCurrentPages();
+      const currentRoute = routes[routes.length - 1].route;
       // 如果在当前页面则直接调用下一首的逻辑，反之则触发nextSong事件
-      if (currentRoute === 'pages/songDetail/Index') {
-        this.playByMode(playMode)
+      if (currentRoute === "pages/songDetail/Index") {
+        this.playByMode(playMode);
       } else {
         // Taro.eventCenter.trigger('nextSong')
       }
-    })
+    });
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('nextProps: ', nextProps);
+    this.setStar(
+      nextProps.song.likeMusicList,
+      nextProps.song.currentSongInfo.id
+    );
     if (
       this.props.song.currentSongInfo.name !==
         nextProps.song.currentSongInfo.name ||
@@ -95,22 +98,56 @@ class Index extends PureComponent {
     }
   }
 
-  // 根据播放模式进行播放
-  playByMode(playMode) {
-    switch (playMode) {
-      case 'one':
-        this.getCurrentSong()
-        break
-      case 'shuffle':
-        this.getShuffleSong()
-        break
-      // 默认按列表顺序播放
-      default:
-        this.getNextSong()
+  updateLrc(currentPosition) {
+    const { lrc } = this.state;
+    let lrcIndex = 0;
+    if (lrc && !lrc.scroll && lrc.lrclist && lrc.lrclist.length > 0) {
+      lrc.lrclist.forEach((item, index) => {
+        if (item.lrc_sec <= currentPosition) {
+          lrcIndex = index;
+        }
+      });
+    }
+    this.setState({
+      lrcIndex
+    });
+  }
+
+  componentWillMount() {
+    // this.getLikeList();
+  }
+
+  getLikeList() {
+    try {
+      const { id } = this.state.userInfo.account;
+      this.props.dispatch({type:"song/getLikeMusicList",payload:{id}})
+    } catch (err) {
+      console.log(err);
     }
   }
 
+  componentWillUnmount() {
+    //更新播放状态
+    this.props.dispatch({
+      type: "song/updatePlayStatus",
+      payload: { isPlaying: this.state.isPlaying }
+    });
+  }
 
+  // 根据播放模式进行播放
+  playByMode(playMode) {
+    switch (playMode) {
+      case "one":
+        this.getCurrentSong();
+        break;
+      case "shuffle":
+        this.getShuffleSong();
+        break;
+      // 默认按列表顺序播放
+      default:
+        this.getNextSong();
+    }
+  }
 
   setSongInfo(songInfo) {
     try {
@@ -179,11 +216,11 @@ class Index extends PureComponent {
       isPlaying: true
     });
   }
-    // 循环播放当前歌曲
-    getCurrentSong() {
-      const { currentSongInfo } = this.props.song
-      this.setSongInfo(currentSongInfo)
-    }
+  // 循环播放当前歌曲
+  getCurrentSong() {
+    const { currentSongInfo } = this.props.song;
+    this.setSongInfo(currentSongInfo);
+  }
   //暂停歌曲
   pauseMusic() {
     backgroundAudioManager.pause();
@@ -270,12 +307,56 @@ class Index extends PureComponent {
   }
 
   updateProgress(currentPosition) {
-    const currentTime= formatPlayTime(currentPosition);
+    const currentTime = formatPlayTime(currentPosition);
     const { dt } = this.props.song.currentSongInfo;
     this.setState({
       currentTime,
       playPercent: Math.floor((currentPosition * 1000 * 100) / dt)
     });
+  }
+
+  hiddenLyric() {
+    this.setState({
+      showLyric: false
+    });
+  }
+
+  showLyric() {
+    this.setState({
+      showLyric: true
+    });
+  }
+  //喜欢音乐
+  likeMusic() {
+    const { star } = this.state;
+    const { id } = this.props.song.currentSongInfo;
+    console.log(99999999);
+    this.props.dispatch({
+      type: "song/likeMusic",
+      payload: { like:!star,id }
+    });
+    this.setState({
+      switchStar: true
+    });
+  }
+
+  setStar(likeList, id) {
+    const { switchStar } = this.state;
+    const flag = likeList.indexOf(id) !== -1;
+    console.log("flag: ", flag, 44444444);
+    this.setState({
+      star: flag
+    });
+    if (switchStar) {
+      this.setState({
+        switchStar: false
+      });
+      Taro.showToast({
+        title: flag ? "已添加到我喜欢的音乐" : "已取消喜欢",
+        icon: "none",
+        duration: 2000
+      });
+    }
   }
 
   render() {
@@ -297,6 +378,11 @@ class Index extends PureComponent {
     } else if (playMode === "shuffle") {
       playModeImg = require("../../assets/images/song/icn_shuffle_mode.png");
     }
+
+    const playingLyric = lrc.lrclist.filter((item, index) => {
+      return index === lrcIndex && !lrc.scroll;
+    });
+
     return (
       <View className="song_container">
         <Image className="song__bg" src={currentSongInfo.al.picUrl} />
@@ -316,7 +402,12 @@ class Index extends PureComponent {
               className="song__music__main--before"
               src={require("../../assets/images/aag.png")}
             />
-            <View className={classnames("song__music__main__cover",!isPlaying&&"transform__pause")}>
+            <View
+              className={classnames(
+                "song__music__main__cover",
+                !isPlaying && "transform__pause"
+              )}
+            >
               <View
                 className={classnames({
                   song__music__main__img: true,
@@ -333,7 +424,7 @@ class Index extends PureComponent {
           </View>
           <View
             className="song__music__lgour"
-            // onClick={this.showLyric.bind(this)}
+            onClick={this.showLyric.bind(this)}
           >
             <View
               className={classnames({
@@ -344,6 +435,9 @@ class Index extends PureComponent {
             ></View>
           </View>
         </View>
+        {!showLyric && (
+          <View className="playingLyric">{playingLyric[0].lrc_text || ""}</View>
+        )}
         <ProgressBar
           percent={playPercent}
           currentTime={currentTime}
@@ -351,12 +445,12 @@ class Index extends PureComponent {
           onChange={this.percentChange.bind(this)}
           onChanging={this.percentChanging.bind(this)}
         />
-        {/*<CLyric
+        <CLyric
           lrc={lrc}
           lrcIndex={lrcIndex}
           showLyric={showLyric}
           onTrigger={() => this.hiddenLyric()}
-        />*/}
+        />
         <View className="song__bottom">
           <View className="song__operation">
             <Image
@@ -394,7 +488,7 @@ class Index extends PureComponent {
                   : require("../../assets/images/song/play_icn_love.png")
               }
               className="song__operation__like"
-              // onClick={this.likeMusic.bind(this)}
+              onClick={this.likeMusic.bind(this)}
             />
           </View>
         </View>
