@@ -6,6 +6,7 @@ import Banner from "../../components/banner/Index";
 import RecommendList from "../../components/recommendList/Index";
 import Loading from "../../components/Loading/Index";
 import { getWindowHeight } from "../../utils/util";
+import CMusic from "../../components/CMusic/Index";
 // import { navigateTo } from "../../utils/navigate";
 import Skeleton from "../../components/skeleton/Index";
 
@@ -42,6 +43,9 @@ function Index(props) {
             <RecommendList recommendList={recommendList}></RecommendList>
           </View>
           {/*{enterLoading && <Loading></Loading>}*/}
+          <CMusic
+            // songInfo={this.props.song}
+          />
         </ScrollView>
       </Skeleton>
     </View>

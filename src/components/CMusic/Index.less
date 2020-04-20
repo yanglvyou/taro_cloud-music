@@ -1,0 +1,87 @@
+.music_components {
+  position: fixed;
+   bottom: 0;
+  width: 100%;
+  background:#f5f6fa;
+  color: #ffffff;
+  height: 100px;
+  border-top: 1px soild #bba8a8;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10000;
+  padding: 0 20px;
+  // &.isHome {
+  //   bottom: 120px;
+  // }
+  .music__pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+  .music__info {
+    flex: 1;
+    overflow: hidden;
+    .music__info__name {
+      color: #bba8a8;
+      font-size: 28px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .music__info__desc {
+      font-size: 22px;
+      margin-top: 10px;
+      color: #2E3030;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  .music__icon--play {
+    padding: 0 10px;
+  }
+  .liebiao{
+    .icon-liebiao{
+     color:#d44439;
+     font-size:60px;
+    }
+  }
+  .music__playlist {
+    color: #323232;
+    .music__playlist__item {
+      display: flex;
+      padding: 15px 10px;
+      align-items: center;
+      &.current {
+        // color: $primary-color;
+      }
+      .music__playlist__item__info {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .music__playlist__item__close {
+        padding: 6px;
+      }
+    }
+  }
+}
+.circling {
+  animation: circling 20s infinite linear;
+  &.z-pause {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes circling {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

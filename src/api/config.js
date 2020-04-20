@@ -5,13 +5,14 @@ function request(url, data = {}, method = "GET") {
     Taro.request({
       url: url,
       data: data,
-      xhrFields: {
-        withCredentials: true
-      },
       method: method,
       header: {
         "Content-Type": "application/json",
-        "X-Litemall-Token": Taro.getStorageSync("token")
+        "X-Litemall-Token": Taro.getStorageSync("token"),
+        cookie:Taro.getStorageSync('cookies')
+      },
+      xhrFields: {
+        withCredentials: true
       },
       success: function(res) {
         if (res.cookies && res.cookies.length > 0) {
@@ -47,6 +48,7 @@ function request(url, data = {}, method = "GET") {
 }
 
 request.get = (url, data) => {
+  console.log('data: ', data,88888888);
   return request(url, data, "GET");
 };
 

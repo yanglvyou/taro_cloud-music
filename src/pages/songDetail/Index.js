@@ -6,6 +6,7 @@ import request from "../../api/config";
 import api from "../../api/index";
 import ProgressBar from "../../components/progressBar/Index";
 import CLyric from "../../components/CLyric/Index";
+import CMusic from '../../components/CMusic/Index';
 import { parse_lrc, formatPlayTime } from "../../utils/util";
 import "./Index.less";
 const backgroundAudioManager = Taro.getBackgroundAudioManager();
@@ -81,7 +82,6 @@ class Index extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps: ', nextProps);
     this.setStar(
       nextProps.song.likeMusicList,
       nextProps.song.currentSongInfo.id
@@ -114,16 +114,12 @@ class Index extends PureComponent {
   }
 
   componentWillMount() {
-    // this.getLikeList();
+    this.getLikeList();
   }
 
   getLikeList() {
-    try {
-      const { id } = this.state.userInfo.account;
-      this.props.dispatch({type:"song/getLikeMusicList",payload:{id}})
-    } catch (err) {
-      console.log(err);
-    }
+    const { id } = this.state.userInfo.account;
+    this.props.dispatch({ type: "song/getLikeMusicList", payload: { id } });
   }
 
   componentWillUnmount() {
@@ -330,10 +326,9 @@ class Index extends PureComponent {
   likeMusic() {
     const { star } = this.state;
     const { id } = this.props.song.currentSongInfo;
-    console.log(99999999);
     this.props.dispatch({
       type: "song/likeMusic",
-      payload: { like:!star,id }
+      payload: { like: !star, id }
     });
     this.setState({
       switchStar: true
@@ -343,7 +338,6 @@ class Index extends PureComponent {
   setStar(likeList, id) {
     const { switchStar } = this.state;
     const flag = likeList.indexOf(id) !== -1;
-    console.log("flag: ", flag, 44444444);
     this.setState({
       star: flag
     });

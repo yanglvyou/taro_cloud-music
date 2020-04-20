@@ -3,6 +3,7 @@ import { ScrollView, View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import { getWindowHeight } from "../../utils/util";
+import CMusic from "../../components/CMusic/Index";
 import request from "../../api/config";
 import { navigateTo } from "../../utils/navigate";
 import api from "../../api/index";
@@ -10,6 +11,7 @@ import "./Index.less";
 
 @connect(
   ({ song }) => ({
+    song:song,
     playListDetailInfo: song.playListDetailInfo,
     recentTab: song.recentTab
   }),
@@ -112,6 +114,9 @@ class Index extends PureComponent {
     return (
       <View className="recentPlay">
         <ScrollView scrollY scrollWithAnimation>
+          <CMusic
+            songInfo={this.props.song}
+          />
           <AtTabs
             swipeable={false}
             current={currentTab}

@@ -44,14 +44,13 @@ export default {
   },
   effects: {
     *likeMusic({ payload: { id, like } }, { call, put }) {
-      console.log("id,like: ", id, like);
       const { code } = yield call(likeMusic, id, like);
       yield put({ type: "updateLikeMusicList", payload: { like, id } });
     },
-    *getLikeMusicList({ payload: { id, like } }, { call, put }) {
-      console.log("id,like: ", id, like);
+    *getLikeMusicList({ payload: { id } }, { call, put }) {
+      console.log('id: ', id,100000);
       const { ids } = yield call(getLikeMusicList, id);
-      yield put({ type: "getLikeMusicList", payload: {likeMusicList:ids } });
+      yield put({ type: "saveLikeMusicList", payload: {likeMusicList:ids } });
     }
   },
   reducers: {
@@ -107,7 +106,7 @@ export default {
       }
       return { ...state, likeMusicList: list };
     },
-    getLikeMusicList(state,{payload:{likeMusicList}}){
+    saveLikeMusicList(state,{payload:{likeMusicList}}){
       return {...state,likeMusicList}
     }
   }

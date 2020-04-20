@@ -5,8 +5,6 @@ import { View } from "@tarojs/components";
 import "./Index.less";
 
 const CLyric = ({ lrc, lrcIndex, showLyric, onTrigger }) => {
-  console.log("lrc: ", lrc, 1111111);
-  console.log("lrcIndex: ", lrcIndex, 222222);
   const cls = classnames({
     song__lyric_components: true,
     hidden: !showLyric
