@@ -10,12 +10,20 @@ import { connect } from "@tarojs/redux";
 import { ScrollView, View, Image } from "@tarojs/components";
 import CustomNavigation from "../../components/customNavigation/Index";
 import { getWindowHeight, getName } from "../../utils/util";
+import CMusic from "../../components/CMusic/Index";
 import { navigateTo } from "../../utils/navigate";
 import Skeleton from "../../components/skeleton/Index";
 import "./Index.less";
 
 const Detail = props => {
-  const { onGetAlbumList, playlist,updateCurrentPage } = props;
+  const {
+    onGetAlbumList,
+    playlist,
+    updateCurrentPage,
+    updateCanplayList,
+    song
+  } = props;
+  console.log("playlist: ", playlist);
   const [scrollTop, setScrollTop] = useState(0);
   var marqueeEl = useRef(null);
   const inputEl = useRef(null);
@@ -32,9 +40,41 @@ const Detail = props => {
     // setScrollTop(res.scrollTop);
   });
   useDidHide(() => {
-    console.log('componentDidHide')
-  })
-  const height=getWindowHeight(true);
+    console.log("componentDidHide");
+  });
+
+  const saveData = songId => {
+    const recordList = playlist.tracks;
+    const tempList = recordList.map(item => {
+      let temp = {};
+      temp.name = item.name;
+      temp.id = item.id;
+      temp.ar = item.ar;
+      temp.al = item.al;
+      temp.copyright = item.copyright;
+      temp.st = item.st;
+      return temp;
+    });
+    const canPlayList = tempList.filter(item => {
+      return item.st !== -200;
+    });
+    updateCanplayList({
+      canPlayList,
+      currentSongId: songId
+    });
+  };
+  const playSong = (songId, canPlay) => {
+    if (canPlay) {
+      saveData(songId);
+      navigateTo({
+        pathname: "/pages/songDetail/Index",
+        search: { id: songId }
+      });
+      return;
+    }
+    Taro.showToast({ title: "无法播放", icon: "none" });
+  };
+  const height = getWindowHeight(true);
   return (
     <View className="detail">
       <CustomNavigation
@@ -44,7 +84,10 @@ const Detail = props => {
         back
         searchBar
       ></CustomNavigation>
-      <Skeleton num={10} loading={Object.keys(props.playlist).length > 0 ? false : true}>
+      <Skeleton
+        num={10}
+        loading={Object.keys(props.playlist).length > 0 ? false : true}
+      >
         {
           <View
             ref={marqueeEl}
@@ -119,7 +162,12 @@ const Detail = props => {
             <View className="detail__songsListWrap">
               {playlist.tracks &&
                 playlist.tracks.map((item, index) => (
-                  <View className="detail__songsList">
+                  <View
+                    className="detail__songsList"
+                    onClick={() => {
+                      playSong(item.id, item.st !== -200);
+                    }}
+                  >
                     <View className="detail__songsIndex">{index + 1}</View>
                     <View className="detail__songsListInfo">
                       <View className="detail__songsListInfo-name">
@@ -134,6 +182,7 @@ const Detail = props => {
                 ))}
             </View>
           </View>
+          <CMusic songInfo={song} />
         </ScrollView>
       </Skeleton>
     </View>
@@ -153,7 +202,8 @@ Detail.defaultProps = {
 
 function mapStateToProps(state) {
   const { playlist } = state.detailIndex;
-  return { playlist };
+  const song = state.song;
+  return { playlist ,song};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -161,8 +211,17 @@ function mapDispatchToProps(dispatch) {
     onGetAlbumList(id) {
       dispatch({ type: "detailIndex/fetchDetailList", payload: id });
     },
-    updateCurrentPage(){
-      dispatch({type:"taroGlobal/updateCurrentPage",payload:{name:"detailIndex"}})
+    updateCurrentPage() {
+      dispatch({
+        type: "taroGlobal/updateCurrentPage",
+        payload: { name: "detailIndex" }
+      });
+    },
+    updateCanplayList(payload) {
+      dispatch({
+        type: "song/updateCanPlayList",
+        payload
+      });
     }
   };
 }

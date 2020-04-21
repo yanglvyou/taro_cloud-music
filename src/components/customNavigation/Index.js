@@ -148,7 +148,7 @@ class CustomNavigation extends Component {
     searchBar: false,
     back: false,
     home: false,
-    iconTheme: "black",
+    iconTheme: "white",
     delta: 1
   };
 

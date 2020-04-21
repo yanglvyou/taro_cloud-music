@@ -4,9 +4,9 @@ import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
 import Banner from "../../components/banner/Index";
 import RecommendList from "../../components/recommendList/Index";
+import CMusic from "../../components/CMusic/Index";
 import Loading from "../../components/Loading/Index";
 import { getWindowHeight } from "../../utils/util";
-import CMusic from "../../components/CMusic/Index";
 // import { navigateTo } from "../../utils/navigate";
 import Skeleton from "../../components/skeleton/Index";
 
@@ -19,7 +19,8 @@ function Index(props) {
     enterLoading,
     onGetBanner,
     onGetRecommendList,
-    changeEnterLoading
+    changeEnterLoading,
+    song
   } = props;
   useEffect(() => {
     onGetBanner();
@@ -44,7 +45,7 @@ function Index(props) {
           </View>
           {/*{enterLoading && <Loading></Loading>}*/}
           <CMusic
-            // songInfo={this.props.song}
+            songInfo={song}
           />
         </ScrollView>
       </Skeleton>
@@ -58,7 +59,8 @@ Index.config = {
 
 function mapStateToProps(state) {
   const { bannerList, recommendList, enterLoading } = state.recommendIndex;
-  return { bannerList, recommendList, enterLoading };
+  const song = state.song;
+  return { bannerList, recommendList, enterLoading,song };
 }
 function mapDispatchToProps(dispatch) {
   return {

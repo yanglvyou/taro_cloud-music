@@ -1,115 +1,41 @@
 import Taro, { useState, FC } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
+import { connect } from "@tarojs/redux";
 import { AtIcon, AtFloatLayout } from "taro-ui";
 import classnames from "classnames";
-// import { currentSongInfoType, MusicItemType } from "../../constants/commonType";
 import "./Index.less";
 
 const backgroundAudioManager = Taro.getBackgroundAudioManager();
 
-const CMusic = ({ songInfo }) => {
-  let { currentSongInfo, isPlaying, canPlayList } = songInfo;
-  console.log("currentSongInfo: ", currentSongInfo, 33333);
+const CMusic = props => {
+  let { currentSongInfo, isPlaying, canPlayList } = props.songInfo;
+  const { updatePlayStatus } = props;
   const [isOpened, setIsOpened] = useState(false);
-  // currentSongInfo = currentSongInfo || {};
-  currentSongInfo = {
-    a: null,
-    al: {
-      id: 21521,
-      name: "陈慧娴金曲精选26首",
-      pic: 109951163637041870,
-      pic_str: "109951163637041877",
-      picUrl:
-        "https://p1.music.126.net/hPoSYFGVAfYjV3JiSObglQ==/109951163637041877.jpg",
-      tns: []
-    },
-    alia: [],
-    ar: [
-      {
-        alias: [],
-        id: 7225,
-        name: "陈慧娴",
-        tns: []
-      }
-    ],
-    cd: "1",
-    cf: "",
-    copyright: 1,
-    cp: 7003,
-    crbt: null,
-    djId: 0,
-    dt: 230000,
-    fee: 8,
-    ftype: 0,
-    h: {
-      br: 320000,
-      fid: 0,
-      size: 9223420,
-      vd: 5880
-    },
-    id: 212376,
-    l: {
-      br: 128000,
-      fid: 0,
-      size: 3689431,
-      vd: 7845
-    },
-    m: {
-      br: 192000,
-      fid: 0,
-      size: 5534094,
-      vd: 6919
-    },
-    mark: 8192,
-    mst: 9,
-    mv: 0,
-    name: "傻女",
-    no: 16,
-    noCopyrightRcmd: null,
-    originCoverType: 0,
-    pop: 100,
-    pst: 0,
-    publishTime: 731001600000,
-    rt: "600902000006280932",
-    rtUrl: null,
-    rtUrls: [],
-    rtype: 0,
-    rurl: null,
-    s_id: 0,
-    st: 0,
-    t: 0,
-    v: 57
-  };
+  currentSongInfo = currentSongInfo || {};
   //没有歌曲正在播放
   if (!currentSongInfo.name) return <View></View>;
 
   function goDetail() {
     const { id } = currentSongInfo;
     Taro.navigateTo({
-      url: `/pages/songDetail/index?id=${id}`
+      url: `/pages/songDetail/Index?id=${id}`
     });
   }
 
   function switchPlayStatus() {
-    const { isPlaying } = songInfo;
+    const { isPlaying } = props.songInfo;
     if (isPlaying) {
       backgroundAudioManager.pause();
-      this.props.dispatch({
-        type: "song/updatePlayStatus",
-        payload: { isPlaying: false }
-      });
+      updatePlayStatus(false);
     } else {
       backgroundAudioManager.play();
-      this.props.dispatch({
-        type: "song/updatePlayStatus",
-        payload: { isPlaying: false }
-      });
+      updatePlayStatus(true);
     }
   }
 
   function playSong(id) {
     Taro.navigateTo({
-      url: `/pages/songDetail/index?id=${id}`
+      url: `/pages/songDetail/Index?id=${id}`
     });
   }
 
@@ -123,8 +49,8 @@ const CMusic = ({ songInfo }) => {
       <Image
         className={classnames({
           music__pic: true,
-          "z-pause": false,
-          circling: isPlaying
+          "z-pause": !isPlaying,
+          circling: true
         })}
         src={currentSongInfo.al.picUrl}
       />
@@ -198,8 +124,23 @@ CMusic.defaultProps = {
   }
 };
 
-CMusic.options={
-  addGlobalClass:true
-}
+CMusic.options = {
+  addGlobalClass: true
+};
 
-export default CMusic;
+const mapDispatchToProps = dispatch => {
+  return {
+    updatePlayStatus(isPlaying) {
+      dispatch({
+        type: "song/updatePlayStatus",
+        payload: { isPlaying }
+      });
+    }
+  };
+};
+const mapStateToProps = state => {
+  const { playListDetailInfo } = state.song;
+  return playListDetailInfo;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CMusic);

@@ -24,6 +24,7 @@
   .music__info {
     flex: 1;
     overflow: hidden;
+    margin-left: 30px;
     .music__info__name {
       color: #bba8a8;
       font-size: 28px;
@@ -42,6 +43,7 @@
   }
   .music__icon--play {
     padding: 0 10px;
+    margin-right: 20px;
   }
   .liebiao{
     .icon-liebiao{
@@ -56,7 +58,7 @@
       padding: 15px 10px;
       align-items: center;
       &.current {
-        // color: $primary-color;
+
       }
       .music__playlist__item__info {
         flex: 1;
@@ -71,17 +73,18 @@
   }
 }
 .circling {
-  animation: circling 20s infinite linear;
-  &.z-pause {
-    animation-play-state: paused;
-  }
+  animation: circling 20s linear infinite;
+
+}
+.z-pause {
+  animation-play-state: paused;
 }
 
 @keyframes circling {
   0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(1turn);
   }
 }

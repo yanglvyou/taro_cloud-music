@@ -173,11 +173,11 @@ class Index extends PureComponent {
                     >
                       <View
                         className="recentPlay__music__info"
-                        // onClick={this.playSong.bind(
-                        //   this,
-                        //   item.song.id,
-                        //   item.song.st !== -200
-                        // )}
+                        onClick={this.playSong.bind(
+                          this,
+                          item.song.id,
+                          item.song.st !== -200
+                        )}
                       >
                         <View className="recentPlay__music__info__name">
                           {item.song.name}
