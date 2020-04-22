@@ -9369,10 +9369,10 @@ taro-axios@^0.7.0:
   dependencies:
     axios "^0.19.0"
 
-taro-ui@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.npm.taobao.org/taro-ui/download/taro-ui-2.3.0.tgz?cache=0&sync_timestamp=1582958787185&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftaro-ui%2Fdownload%2Ftaro-ui-2.3.0.tgz#1094cd0c9e4c50c6ac08ca19409c55408f46e32a"
-  integrity sha1-EJTNDJ5MUMasCMoZQJxVQI9G4yo=
+taro-ui@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.npm.taobao.org/taro-ui/download/taro-ui-2.3.3.tgz#06cfdfbfa36fb549079a38c814b23d9e360de4f7"
+  integrity sha1-Bs/fv6NvtUkHmjjIFLI9njYN5Pc=
   dependencies:
     "@types/react" "^16.7.3"
     bind-decorator "^1.0.11"

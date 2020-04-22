@@ -120,6 +120,13 @@
 					"pathName": "pages/songDetail/Index",
 					"query": "id=95843",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/search/Index",
+					"pathName": "pages/search/Index",
+					"query": "id=95843",
+					"scene": null
 				}
 			]
 		}

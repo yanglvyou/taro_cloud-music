@@ -4,6 +4,7 @@ import { connect } from "@tarojs/redux";
 import CustomNavigation from "../../components/customNavigation/Index";
 import HorizenItem from "../../components/horizen-item/Index";
 import { categoryTypes, alphaTypes } from "../../api/data";
+import CMusic from "../../components/CMusic/Index";
 import Loading from "../../components/Loading/Index";
 import { navigateTo } from "../../utils/navigate";
 import { getWindowHeight } from "../../utils/util";
@@ -19,7 +20,8 @@ const Singers = props => {
     enterLoading,
     onGetHotSingersList,
     onGetSingersList,
-    onClearSingerList
+    onClearSingerList,
+    song
   } = props;
   const [category, setCategory] = useState("");
   const [alpha, setAlpha] = useState("");
@@ -96,6 +98,7 @@ const Singers = props => {
             <View className="user__list-name">{singer.name}</View>
           </View>
         ))}
+        <CMusic songInfo={song} />
       </ScrollView>
       {enterLoading && <Loading></Loading>}
     </View>
@@ -104,7 +107,8 @@ const Singers = props => {
 
 function mapStateToProps(state) {
   const { singersList, enterLoading, more } = state.singerIndex;
-  return { singersList, enterLoading, more };
+  const song = state.song;
+  return { singersList, enterLoading, more,song };
 }
 
 function mapDispatchToProps(dispatch) {

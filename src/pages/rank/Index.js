@@ -7,9 +7,10 @@ import {
   Image
 } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import CustomNavigation from "../../components/customNavigation/Index";
+// import CustomNavigation from "../../components/customNavigation/Index";
 import RankTypeNav from "../../components/rankTypeNav/Index";
 import { getWindowHeight } from "../../utils/util";
+import CMusic from "../../components/CMusic/Index";
 import emitter from "../../utils/event";
 import { navigateTo } from "../../utils/navigate";
 
@@ -77,7 +78,6 @@ class Rank extends Component {
     const officialList = this.props.officialList;
     return (
       <View className="rank">
-        <CustomNavigation background="#d44439" searchBar></CustomNavigation>
         <ScrollView scrollY style={{height}} scrollWithAnimation>
           <View className="rank__nav">
             <RankTypeNav
@@ -85,7 +85,6 @@ class Rank extends Component {
               typeItems={this.state.typeItems}
             />
           </View>
-
           <Swiper
             className="rank__wrap"
             onChange={this.handleChange}
@@ -150,12 +149,14 @@ class Rank extends Component {
                         </View>
                       </View>
                     )}
+
                   </ScrollView>
                 </SwiperItem>
               );
             })}
           </Swiper>
         </ScrollView>
+        <CMusic songInfo={this.props.song} />
       </View>
     );
   }
@@ -164,20 +165,21 @@ class Rank extends Component {
 Rank.defaultProps = {};
 
 Rank.config={
-  navigationStyle:"custom"
+  // navigationStyle:"custom"
 }
 
-// function mapStateToProps(state) {
-//   const { list } = state.rankIndex;
-//   return { list };
-// }
+function mapStateToProps(state) {
+  const { list } = state.rankIndex;
+  const song = state.song;
+  return { list,song };
+}
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     onGetRankList() {
-//       dispatch({ type: "rankIndex/fetchRankList" });
-//     }
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    onGetRankList() {
+      dispatch({ type: "rankIndex/fetchRankList" });
+    }
+  };
+}
 
-export default Rank;
+export default connect(mapStateToProps,mapDispatchToProps)(Rank);

@@ -17,4 +17,5 @@ export default {
   getLyric:baseUrl+'/lyric',
   likeMusic:baseUrl+'/like',
   getLikeMusicList:baseUrl+'/likelist',
+  getHotSearchList:baseUrl+'/search/hot/detail',
 };

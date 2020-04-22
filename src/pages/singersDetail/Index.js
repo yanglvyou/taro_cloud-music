@@ -10,12 +10,13 @@ import { connect } from "@tarojs/redux";
 import { ScrollView, View, Image } from "@tarojs/components";
 import CustomNavigation from "../../components/customNavigation/Index";
 import { getWindowHeight, getName } from "../../utils/util";
-// import { navigateTo } from "../../utils/navigate";
+import CMusic from "../../components/CMusic/Index";
+import { navigateTo } from "../../utils/navigate";
 import Skeleton from "../../components/skeleton/Index";
 import "./Index.less";
 
 const SingerDetail = props => {
-  const { onGetSingersDetailList, artist, hotSongs, updateCurrentPage } = props;
+  const { onGetSingersDetailList, updateCanplayList,artist, hotSongs, updateCurrentPage,song } = props;
   // const [scrollTop, setScrollTop] = useState(0);
   const [opacity, setOpacity] = useState(0);
   const router = useRouter();
@@ -32,6 +33,36 @@ const SingerDetail = props => {
   useDidHide(() => {
     console.log("componentDidHide");
   });
+  const saveData = songId => {
+    const tempList = hotSongs.map(item => {
+      let temp = {};
+      temp.name = item.name;
+      temp.id = item.id;
+      temp.ar = item.ar;
+      temp.al = item.al;
+      temp.copyright = item.copyright;
+      temp.st = item.st;
+      return temp;
+    });
+    const canPlayList = tempList.filter(item => {
+      return item.st !== -200;
+    });
+    updateCanplayList({
+      canPlayList,
+      currentSongId: songId
+    });
+  };
+  const playSong = (songId, canPlay) => {
+    if (canPlay) {
+      saveData(songId);
+      navigateTo({
+        pathname: "/pages/songDetail/Index",
+        search: { id: songId }
+      });
+      return;
+    }
+    Taro.showToast({ title: "无法播放", icon: "none" });
+  };
   const height=getWindowHeight(true)
   return (
     <View className="detail">
@@ -82,7 +113,9 @@ const SingerDetail = props => {
             </View>
             <View className="detail__songsListWrap">
               {hotSongs.map((item, index) => (
-                <View className="detail__songsList">
+                <View className="detail__songsList"  onClick={() => {
+                  playSong(item.id, item.st !== -200);
+                }}>
                   <View className="detail__songsIndex">{index + 1}</View>
                   <View className="detail__songsListInfo">
                     <View className="detail__songsListInfo-name">
@@ -97,6 +130,7 @@ const SingerDetail = props => {
               ))}
             </View>
           </View>
+          <CMusic songInfo={song} />
         </ScrollView>
       </Skeleton>
     </View>
@@ -115,7 +149,8 @@ SingerDetail.defaultProps = {
 
 function mapStateToProps(state) {
   const { artist, hotSongs } = state.singersDetailIndex;
-  return { artist, hotSongs };
+  const song = state.song;
+  return { artist, hotSongs,song};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -130,6 +165,12 @@ function mapDispatchToProps(dispatch) {
       dispatch({
         type: "taroGlobal/updateCurrentPage",
         payload: { name: "singersDetailIndex" }
+      });
+    },
+    updateCanplayList(payload) {
+      dispatch({
+        type: "song/updateCanPlayList",
+        payload
       });
     }
   };

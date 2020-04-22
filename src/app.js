@@ -37,12 +37,12 @@ class App extends Component {
       "pages/login/Index",
       "pages/recentPlay/Index",
       "pages/songDetail/Index",
-      "pages/scrollIntoView",
+      "pages/search/Index",
     ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#d44439",
-      navigationBarTitleText: "taro",
+      navigationBarTitleText: "网易音乐",
       navigationBarTextStyle: "white",
       // navigationStyle: "custom"
     },
