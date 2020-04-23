@@ -38,6 +38,7 @@ class App extends Component {
       "pages/recentPlay/Index",
       "pages/songDetail/Index",
       "pages/search/Index",
+      "pages/searchResult/Index"
     ],
     window: {
       backgroundTextStyle: "light",

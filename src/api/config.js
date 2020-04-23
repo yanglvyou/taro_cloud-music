@@ -48,7 +48,6 @@ function request(url, data = {}, method = "GET") {
 }
 
 request.get = (url, data) => {
-  console.log('data: ', data,88888888);
   return request(url, data, "GET");
 };
 

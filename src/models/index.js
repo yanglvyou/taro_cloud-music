@@ -5,6 +5,7 @@ import RankModal from '../pages/rank/RankModal';
 import DetailModal from '../pages/detail/DetailModal';
 import SingersDetailModal from '../pages/singersDetail/SingersDetailModal';
 import SinglModal from '../pages/songDetail/songModal';
+import SearchModal from '../pages/search/searchModal';
 
 
 export default [
@@ -14,5 +15,6 @@ export default [
   RankModal,
   DetailModal,
   SingersDetailModal,
-  SinglModal
+  SinglModal,
+  SearchModal
 ];

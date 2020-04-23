@@ -50,49 +50,48 @@ export const getName = list => {
 };
 
 // 格式化播放次数
-export const formatCount = (times) => {
-  let formatTime=0;
-  times = times ? Number(times) : 0
+export const formatCount = times => {
+  let formatTime = 0;
+  times = times ? Number(times) : 0;
   switch (true) {
-    case times > 100000000 :
-      formatTime = `${(times / 100000000).toFixed(1)}亿`
-      break
-    case times > 100000 :
-        formatTime = `${(times / 10000).toFixed(1)}万`
-        break
+    case times > 100000000:
+      formatTime = `${(times / 100000000).toFixed(1)}亿`;
+      break;
+    case times > 100000:
+      formatTime = `${(times / 10000).toFixed(1)}万`;
+      break;
     default:
-      formatTime = times
+      formatTime = times;
   }
-  return formatTime
-}
-
+  return formatTime;
+};
 
 // 转换歌词字符串为数组
-export const parse_lrc = (lrc_content) => {
-  let now_lrc=[];
-  let lrc_text=[];
-  let lrc_sec=[];
-  let lrc_row= lrc_content.split("\n"); // 将原始的歌词通过换行符转为数组
+export const parse_lrc = lrc_content => {
+  let now_lrc = [];
+  let lrc_text = [];
+  let lrc_sec = [];
+  let lrc_row = lrc_content.split("\n"); // 将原始的歌词通过换行符转为数组
   let scroll = true; // 默认scroll初始值为true
   for (let i in lrc_row) {
-    if ((lrc_row[i].indexOf(']') === -1) && lrc_row[i]) {
-      now_lrc.push({ lrc_text: lrc_row[i] })
-    } else if (lrc_row[i] !== '') {
-      let tmp= lrc_row[i].split("]")
+    if (lrc_row[i].indexOf("]") === -1 && lrc_row[i]) {
+      now_lrc.push({ lrc_text: lrc_row[i] });
+    } else if (lrc_row[i] !== "") {
+      let tmp = lrc_row[i].split("]");
       for (let j in tmp) {
-        scroll = false
-        let tmp2= tmp[j].substr(1, 8)
-        let tmp3 = tmp2.split(":")
-        let lrc_sec= Number(tmp3[0] * 60 + Number(tmp3[1]))
-        if (lrc_sec && (lrc_sec > 0)) {
-          let lrc = (tmp[tmp.length - 1]).replace(/(^\s*)|(\s*$)/g, "")
-          lrc && now_lrc.push({ lrc_sec: lrc_sec, lrc_text: lrc })
+        scroll = false;
+        let tmp2 = tmp[j].substr(1, 8);
+        let tmp3 = tmp2.split(":");
+        let lrc_sec = Number(tmp3[0] * 60 + Number(tmp3[1]));
+        if (lrc_sec && lrc_sec > 0) {
+          let lrc = tmp[tmp.length - 1].replace(/(^\s*)|(\s*$)/g, "");
+          lrc && now_lrc.push({ lrc_sec: lrc_sec, lrc_text: lrc });
         }
       }
     }
   }
   if (!scroll) {
-    now_lrc.sort(function (a, b){
+    now_lrc.sort(function(a, b) {
       return a.lrc_sec - b.lrc_sec;
     });
   }
@@ -100,7 +99,7 @@ export const parse_lrc = (lrc_content) => {
     now_lrc: now_lrc,
     scroll: scroll
   };
-}
+};
 
 //转换歌曲播放时间
 export const formatPlayTime = interval => {
@@ -109,3 +108,24 @@ export const formatPlayTime = interval => {
   const second = (interval % 60).toString().padStart(2, "0");
   return `${minute}:${second}`;
 };
+
+//保存搜索关键字
+export const setKeyWordsHistory = keyword => {
+  const keywordslist = Taro.getStorageSync("keywordslist") || [];
+  const index = keywordslist.findIndex(item => item === keyword);
+  if (index !== -1) {
+    keywordslist.splice(index, 1);
+  }
+  keywordslist.unshift(keyword);
+  Taro.setStorage({ key: "keywordslist", data: keywordslist });
+};
+
+//获取搜索关键字
+export const getKeyWordsHistory=()=>{
+  return Taro.getStorageSync("keywordslist");
+}
+
+// 清除搜索关键字
+export const clearKeywordsHistory = () => {
+  Taro.removeStorageSync('keywordslist')
+}
