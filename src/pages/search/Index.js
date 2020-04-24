@@ -13,7 +13,7 @@ import {
 import "./Index.less";
 
 function Index(props) {
-  const { GetHotSearchList, hotSearchList } = props;
+  const { GetHotSearchList, hotSearchList,loadStatus } = props;
   const [searchValue, setSearchValue] = useState("");
   const [historyList, setHistoryList] = useState([]);
   console.log("historyList: ", historyList);
@@ -33,6 +33,7 @@ function Index(props) {
     const keywords = searchValue;
     setKeyWordsHistory(keywords);
     navigateTo({ pathname: "/pages/searchResult/Index", search: { keywords } });
+    setSearchValue("");
   }
   console.log("hotSearchList: ", hotSearchList);
 
@@ -46,7 +47,9 @@ function Index(props) {
   });
 
   const height = getWindowHeight(true);
-
+  if(loadStatus){
+    Taro.setNavigationBarTitle({title:"搜索"})
+  }
   return (
     <View className="searchIndex">
       <AtSearchBar
@@ -63,8 +66,16 @@ function Index(props) {
         onActionClick={() => {
           goToResult();
         }}
+        onConfirm={() => {
+          goToResult();
+        }}
       />
-      <ScrollView scrollY scrollWithAnimation style={{ height }}>
+      <ScrollView
+        scrollY
+        scrollWithAnimation
+        style={{ height }}
+        className="scrollWrapper"
+      >
         {historyList.length ? (
           <View className="search__history">
             <View className="search__history__title">
@@ -86,7 +97,12 @@ function Index(props) {
                 <Text
                   className="search__history__list__item"
                   key={keyword}
-                  // onClick={this.goResult.bind(this, keyword)}
+                  onClick={() => {
+                    navigateTo({
+                      pathname: "/pages/searchResult/Index",
+                      search: { keyword }
+                    });
+                  }}
                 >
                   {keyword}
                 </Text>
@@ -158,9 +174,13 @@ function Index(props) {
   );
 }
 
+Index.config={
+  navigationBarTitleText:"加载中..."
+}
+
 const mapStateToProps = state => {
-  const { hotSearchList } = state.search;
-  return { hotSearchList };
+  const { hotSearchList,loadStatus } = state.search;
+  return { hotSearchList ,loadStatus};
 };
 
 const mapDispatchToProps = dispatch => {
