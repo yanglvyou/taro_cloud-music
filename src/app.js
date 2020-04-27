@@ -20,7 +20,6 @@ const store = dvaApp.getStore();
 //   require('nerv-devtools')
 // }
 
-
 class App extends Component {
   config = {
     pages: [
@@ -29,21 +28,28 @@ class App extends Component {
       "pages/rank/Index",
       "pages/usercenter/Index",
       "pages/detail/Index",
-      "pages/skeleton/Index",
       "pages/singersDetail/Index",
-      "pages/canvas/Index",
-      "pages/canvas_demo1/Index",
-      "pages/login/Index",
-      "pages/recentPlay/Index",
       "pages/songDetail/Index",
-      "pages/search/Index",
-      "pages/searchResult/Index"
+      "pages/search/Index"
+    ],
+    subpackages: [
+      {
+        root: "pagesSubPackage",
+        name: "package",
+        pages: [
+          "pages/canvas/Index",
+          "pages/canvas_demo1/Index",
+          "pages/searchResult/Index",
+          "pages/login/Index",
+          "pages/recentPlay/Index",
+        ]
+      }
     ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#d44439",
       navigationBarTitleText: "网易音乐",
-      navigationBarTextStyle: "white",
+      navigationBarTextStyle: "white"
       // navigationStyle: "custom"
     },
     requiredBackgroundModes: ["audio"],
@@ -53,8 +59,8 @@ class App extends Component {
         {
           pagePath: "pages/index/Index",
           text: "推荐",
-          iconPath: "./assets/images/tabbar/store.png",
-          selectedIconPath: "./assets/images/tabbar/store-active.png"
+          iconPath: "./assets/images/tabbar/gift.png",
+          selectedIconPath: "./assets/images/tabbar/gift-active.png"
         },
         {
           pagePath: "pages/singer/Index",

@@ -46,12 +46,12 @@ const Index = () => {
     request.get(api.userLogOut).then(res => {
       console.log("退出登录", res);
     });
-    Taro.navigateTo({ url: "/pages/login/Index" });
+    Taro.navigateTo({ url: "/pagesSubPackage/pages/login/Index" });
     setIsLogoutModal(false);
   }
 
   function JumpPage(name) {
-    Taro.navigateTo({ url: `/pages/${name}/Index` });
+    Taro.navigateTo({ url: `/pagesSubPackage/pages/${name}/Index` });
   }
 
   return (
@@ -211,7 +211,7 @@ const Index = () => {
             <View
               className="usercenter__container__goLogin"
               onClick={() => {
-                Taro.navigateTo({ url: "/pages/login/Index" });
+                Taro.navigateTo({ url: "/pagesSubPackage/pages/login/Index" });
               }}
             >
               去登录

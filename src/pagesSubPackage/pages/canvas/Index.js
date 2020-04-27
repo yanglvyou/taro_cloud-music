@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Button, Image } from "@tarojs/components";
-import TaroCanvasDrawer from "../../components/taro-canvas/Index";
+import TaroCanvasDrawer from "../../../components/taro-canvas/Index";
 
 import "./Index.less";
 

@@ -1,7 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Button, Image, ScrollView } from "@tarojs/components";
-import TaroCanvasDrawer from "../../components/taro-canvas/Index";
-import { getWindowHeight } from "../../utils/util";
+import TaroCanvasDrawer from "../../../components/taro-canvas/Index";
+import { getWindowHeight } from "../../../utils/util";
 
 import "./Index.less";
 

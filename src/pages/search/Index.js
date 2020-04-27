@@ -32,7 +32,7 @@ function Index(props) {
   function goToResult() {
     const keywords = searchValue;
     setKeyWordsHistory(keywords);
-    navigateTo({ pathname: "/pages/searchResult/Index", search: { keywords } });
+    navigateTo({ pathname: "/pagesSubPackage/pages/searchResult/Index", search: { keywords } });
     setSearchValue("");
   }
   console.log("hotSearchList: ", hotSearchList);
@@ -99,7 +99,7 @@ function Index(props) {
                   key={keyword}
                   onClick={() => {
                     navigateTo({
-                      pathname: "/pages/searchResult/Index",
+                      pathname: "/pagesSubPackage/pages/searchResult/Index",
                       search: { keyword }
                     });
                   }}
@@ -123,7 +123,7 @@ function Index(props) {
                 key={item.searchWord}
                 onClick={() => {
                   navigateTo({
-                    pathname: "/pages/searchResult/Index",
+                    pathname: "/pagesSubPackage/pages/searchResult/Index",
                     search: { keyword:item.searchWord }
                   });
                 }}

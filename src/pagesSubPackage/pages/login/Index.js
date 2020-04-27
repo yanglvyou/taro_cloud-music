@@ -1,8 +1,8 @@
 import Taro, { useState } from "@tarojs/taro";
 import { View, Input } from "@tarojs/components";
 import { AtIcon, AtButton, AtToast } from "taro-ui";
-import request from "../../api/config";
-import api from "../../api/index";
+import request from "../../../api/config";
+import api from "../../../api/index";
 import "./Index.less";
 
 const Login = () => {
