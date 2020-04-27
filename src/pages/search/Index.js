@@ -121,7 +121,12 @@ function Index(props) {
               <View
                 className="search__hot__list__item flex flex-align-center"
                 key={item.searchWord}
-                // onClick={this.goResult.bind(this, item.searchWord)}
+                onClick={() => {
+                  navigateTo({
+                    pathname: "/pages/searchResult/Index",
+                    search: { keyword:item.searchWord }
+                  });
+                }}
               >
                 <View
                   className={classnames({

@@ -127,6 +127,12 @@
 					"pathName": "pages/search/Index",
 					"query": "id=95843",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/searchResult/Index",
+					"pathName": "pages/searchResult/Index",
+					"scene": null
 				}
 			]
 		}

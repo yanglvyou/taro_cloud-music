@@ -33,7 +33,6 @@ class App extends Component {
       "pages/singersDetail/Index",
       "pages/canvas/Index",
       "pages/canvas_demo1/Index",
-      "pages/input-emoji/Index",
       "pages/login/Index",
       "pages/recentPlay/Index",
       "pages/songDetail/Index",
